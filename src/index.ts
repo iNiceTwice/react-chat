@@ -1,23 +1,22 @@
 import express from "express";
-//import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import cors from "cors";
 import { Server } from "socket.io"
-import path from "path"
 import { createServer } from "http"
+import * as dotenv from 'dotenv'
+import path from "path"
 //import userRoutes = from"./routes/userRoutes")
+dotenv.config()
 const app = express();
-
 const server = createServer(app)
-/*
+
 //Connecting to DB
-mongoose.connect(mongoUri, { 
-  useNewUrlParser: true,
-  useUnifiedTopology: true 
-})
-.then(data => console.log("- Database Online -"))
+mongoose.set('strictQuery', true);
+mongoose.connect(process.env.MONGO_URI ?? "")
+.then(() => console.log("- Database Online -"))
 .catch(err => console.log(err));
 
-*/
+
 
 
 //middlewares
@@ -37,13 +36,12 @@ server.listen(app.get("port"), () => {
   console.log("- Server Online on " + app.get("port") + " -");
 });
 
-const io = new Server(server,{
+const io = new Server(server, {
   cors:{
     origin:"http://127.0.0.1:5173",
     methods:["GET","POST"]
   }
 })
-
 
 io.on("connection", socket =>{
 
