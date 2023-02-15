@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import logo from '../assets/logo.png'
 import io from "socket.io-client"
-import ContactList from '../components/ContactList'
-import Heading from '../components/Heading'
-import ChatMessages from '../components/ChatMessages'
-import ChatInput from '../components/ChatInput'
-import SideMenu from '../components/SideMenu'
+import ContactList from '../components/chat/ContactList'
+import Heading from '../components/chat/Heading'
+import ChatMessages from '../components/chat/ChatMessages'
+import ChatInput from '../components/chat/ChatInput'
+import SideMenu from '../components/chat/SideMenu'
 
 //const socket = io("http://localhost:3000")
 
