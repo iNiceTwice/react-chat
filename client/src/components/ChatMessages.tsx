@@ -1,4 +1,4 @@
-const Chat = () => {
+const ChatMessages = () => {
     return ( 
         <div className="flex h-full">
             
@@ -6,4 +6,4 @@ const Chat = () => {
      );
 }
  
-export default Chat;
+export default ChatMessages;

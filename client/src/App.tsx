@@ -1,29 +1,27 @@
-import { useState } from 'react'
-import logo from './assets/logo.png'
-import io from "socket.io-client"
-import ContactList from './components/ContactList'
-import Heading from './components/Heading'
-import Chat from './components/Chat'
-import ChatInput from './components/ChatInput'
-import SideMenu from './components/SideMenu'
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom"
+import Chat from "./pages/chat"
+import Home from "./pages/home"
 
-const socket = io("http://localhost:3000")
+interface Props {
+  children: JSX.Element | JSX.Element[]
+}
 
-function App() {
-  
+const Auth = ({children}:Props) => {
+  if(!localStorage.getItem("token")){
+    return <Navigate to="/login" replace={true} />
+  }
+  return children
+}
 
+function App() {  
   return (
-    <div className='w-full h-full flex justify-center items-center'>
-        <div className='flex overflow-hidden rounded-md h-full w-full bg-terceary'>
-          <SideMenu/>
-          <ContactList/>
-          <div className='flex flex-col h-full w-full'>
-            <Heading/>
-            <Chat/>
-            <ChatInput/>
-          </div>      
-        </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/chat' element={<Chat/>}/>
+        <Route path='/login' element={<div>s</div>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

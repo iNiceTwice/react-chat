@@ -22,3 +22,9 @@ body {
   margin: 0;
   height: 100vh;
 }
+.bg-pattern {
+  background-color: #f6f8fc;
+  background-image: radial-gradient(#276fff 2px, transparent 2px), radial-gradient(#276fff 2px, #f6f8fc 2px);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
+}
