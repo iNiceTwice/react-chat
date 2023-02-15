@@ -1,7 +1,7 @@
 import Logo from "../assets/logo.png"
 import AuthOptions from "../components/home/AuthOptions";
 import Login from "../components/home/Login";
-import { HomeProvider } from "../context/home/homeProvider";// https://api.dicebear.com/5.x/big-smile/svg?seed=ana
+import { HomeProvider } from "../context/home/homeProvider";
 
 const Home = () => {
     
