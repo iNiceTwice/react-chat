@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className='w-full h-full flex justify-center items-center'>
-        <div className='flex overflow-hidden rounded-md h-full md:h-[50rem] w-full lg:w-8/12 bg-terceary'>
+        <div className='flex overflow-hidden rounded-md h-full w-full bg-terceary'>
           <SideMenu/>
           <ContactList/>
           <div className='flex flex-col h-full w-full'>
