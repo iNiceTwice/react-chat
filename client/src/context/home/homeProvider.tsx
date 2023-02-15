@@ -12,11 +12,7 @@ const initialState:HomeState = {
 
 export const HomeProvider = ({children}:Props) => {
     const [ state, setState ] = useState<HomeState>(initialState)
-
-    useEffect(()=>{
-        // eslint-disable-next-line
-    },[])
-
+    
     return (
         <HomeContext.Provider
             value={{

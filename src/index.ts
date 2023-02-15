@@ -4,8 +4,7 @@ import cors from "cors";
 import { Server } from "socket.io"
 import { createServer } from "http"
 import * as dotenv from 'dotenv'
-import path from "path"
-//import userRoutes = from"./routes/userRoutes")
+import userRoutes from "./routes/userRoutes"
 
 dotenv.config()
 const app = express();
@@ -17,19 +16,13 @@ mongoose.connect(process.env.MONGO_URI ?? "")
 .then(() => console.log("- Database Online -"))
 .catch(err => console.log(err));
 
-
-
-
 //middlewares
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //api routes
-//app.use(userRoutes)
-
-//set production build
-app.use(express.static(path.join(__dirname, "/client/build")))
+app.use(userRoutes)
 
 //server settings 
 app.set("port", process.env.PORT || 3000);
