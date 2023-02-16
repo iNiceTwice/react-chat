@@ -21,7 +21,7 @@ const userSchema = new Schema({
         required:true,
         trim:true
     },
-    date_of:{
+    created_at:{
         type:Date, 
         default:Date.now,
         required:true

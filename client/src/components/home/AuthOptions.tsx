@@ -9,9 +9,9 @@ const ButtonGroup = () => {
     const { setState } = useContext(HomeContext)
 
     return (
-        <div className="flex justify-center mt-10 gap-6 ml-14">
+        <div className="flex justify-center items-center mt-10 gap-6">
             <div className="flex flex-col justify-center items-center gap-4">
-                <button onClick={()=> setState({authOption:"register"})} className="rounded-full p-4 shadow-md h-fit hover:scale-105">
+                <button onClick={()=> setState({authOption:"register"})} className="bg-white rounded-full p-4 shadow-md h-fit hover:scale-105">
                     <CiUser size={25}/>
                 </button>
                 <p className="text-sm">Register</p>
@@ -23,7 +23,7 @@ const ButtonGroup = () => {
                 <p className="text-sm">Enter as a guest</p>
             </div>
             <div className="flex flex-col justify-center items-center gap-4">
-                <button onClick={()=> setState({authOption:"login"})} className="rounded-full p-4 shadow-md h-fit hover:scale-105">
+                <button onClick={()=> setState({authOption:"login"})} className="bg-white rounded-full p-4 shadow-md h-fit hover:scale-105">
                     <CiLogin size={25}/>
                 </button>
                 <p className="text-sm">Login</p>

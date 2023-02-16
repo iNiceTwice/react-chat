@@ -17,10 +17,13 @@
 #root{
   height: 100%;
 }
+html{
+  height:100%;
+}
 body {
   font-family: 'DM Sans', sans-serif;
   margin: 0;
-  height: 100vh;
+  height: 100%;
 }
 .bg-pattern {
   background-color: #f6f8fc;
