@@ -53,9 +53,9 @@ export const loginUser = async (req: Request, res:Response) => {
     const user = await USERS.findOne({email})
 
     if(!user){
-        return res.status(401).send({message:"bad credentials"})
+        return res.status(401).send({message:"Bad credentials."})
     }else if(!compareSync(password, user.password)){
-        return res.status(401).send({message:"bad credentials"})
+        return res.status(401).send({message:"Bad credentials."})
     }else{
 
         const token = sign({

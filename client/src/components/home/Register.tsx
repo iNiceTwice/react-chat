@@ -25,8 +25,6 @@ const Register = () => {
     },
     onSubmit:(values)=>{
         registerUser(values)
-            .then(()=> console.log("todo en orden"))
-            .catch((err)=> console.log(err))
     },
     validationSchema: registerSchema              
     })
