@@ -5,6 +5,7 @@ import { Server } from "socket.io"
 import { createServer } from "http"
 import * as dotenv from 'dotenv'
 import userRoutes from "./routes/userRoutes"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 const app = express();
@@ -17,7 +18,8 @@ mongoose.connect(process.env.MONGO_URI ?? "")
 .catch(err => console.log(err));
 
 //middlewares
-app.use(cors());
+app.use(cors({origin:"http://localhost:3001", credentials:true}));
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -32,7 +34,7 @@ server.listen(app.get("port"), () => {
 
 const io = new Server(server, {
   cors:{
-    origin:"http://127.0.0.1:5173",
+    origin:"http://localhost:3001",
     methods:["GET","POST"]
   }
 })

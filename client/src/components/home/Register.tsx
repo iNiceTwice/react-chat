@@ -26,12 +26,12 @@ const Register = () => {
             .then(()=> console.log("todo en orden"))
             .catch((err)=> console.log(err))
     },
-    validationSchema: registerSchema
+    validationSchema: registerSchema              
     })
 
     const registerUser = async (user:User):Promise<void> => {
-        await axios.post("http://localhost:3000", user)
-    }
+      await axios.post("http://localhost:3000/register", user ,{ withCredentials: true })
+    }             
 
     return ( 
         <>

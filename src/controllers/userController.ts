@@ -23,24 +23,22 @@ export const registerUser = async (req: Request, res:Response) => {
         publicId:`${username}#${Math.floor(Math.random() * (9999 - 1000) + 1000)}`
     })
     await newUser.save()
-    
+
     const token = sign({
             publicId:newUser.publicId,
             email:newUser.email,
             name:newUser.username,
-            password:newUser.password
         }, "4sad654t65j4yi51hg32n18wr74tqe6w4f32c1v3")
 
-    const serialized = serialize("chat-token", token,{
+    res.cookie("chat-token", token,{
         httpOnly:true,
-        secure: process.env.NODE_ENV === "development",
-        sameSite:"strict",
-        path:"/",
-        maxAge:1000000
+        maxAge: 1000000,
+        secure: true,
+        sameSite:'none'
     })
-
-    res.setHeader("Set-Cookie", serialized)
-    res.status(200).json({message:"User created succesfully"})
+    res.status(200).json({
+        message:"User created succesfully",
+    })
 }
 
 export const loginUser = async (req: Request, res:Response) => {
