@@ -4,14 +4,16 @@ import { hashSync, genSaltSync, compareSync } from "bcrypt-nodejs"
 import { sign } from "jsonwebtoken"
 
 export const registerUser = async (req: Request, res:Response) => {
+
     const { username, password, email } = req.body
-
     if(!password || !email || !username){
-        res.status(500).json({message:"Missing credentials, make sure you're sending this values: password, username and email"})
+        return res.status(500).json({message:"Missing credentials, make sure you're sending this values: password, username and email"})
     }
-
+    
     const emailAlreadyExists = await USERS.findOne({ email })
-    emailAlreadyExists && res.status(409).send("Email already exists")
+    if( emailAlreadyExists ){
+        return res.status(409).send("Email already exists")
+    }
 
     const encryptedPass = hashSync(password, genSaltSync(10))
 
@@ -37,7 +39,7 @@ export const registerUser = async (req: Request, res:Response) => {
         secure: true,
         sameSite:'none'
     })
-    res.status(200).json({
+    return res.status(200).json({
         message:"User created succesfully",
         user:{
             publicId:newUser.publicId,
@@ -86,10 +88,10 @@ export const loginUser = async (req: Request, res:Response) => {
 
 export const logoutUser = async (req: Request, res:Response) => {
     res.clearCookie("chat-token")
-    res.end()
+    return res.json({message:"User logout"})
 }
 
 export const getUsers = async (req: Request, res:Response) => {
     const users = await USERS.find()
-    res.send(users)
+    return res.send(users)
 }
