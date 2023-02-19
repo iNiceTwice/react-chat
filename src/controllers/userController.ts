@@ -4,6 +4,8 @@ import { hashSync, genSaltSync, compareSync } from "bcrypt-nodejs"
 import { sign } from "jsonwebtoken"
 import { serialize } from "cookie"
 
+const JWT_SECRET = process.env.JWT_SECRET ?? ""
+
 export const registerUser = async (req: Request, res:Response) => {
     const { username, password, email } = req.body
 
@@ -28,7 +30,7 @@ export const registerUser = async (req: Request, res:Response) => {
             publicId:newUser.publicId,
             email:newUser.email,
             name:newUser.username,
-        }, "4sad654t65j4yi51hg32n18wr74tqe6w4f32c1v3")
+        }, JWT_SECRET)
 
     res.cookie("chat-token", token,{
         httpOnly:true,
@@ -51,32 +53,26 @@ export const loginUser = async (req: Request, res:Response) => {
     }else if(!compareSync(password, user.password)){
         return res.status(401).send({message:"bad credentials"})
     }else{
+
         const token = sign({
             publicId:user.publicId,
             email:user.email,
-            name:user.username,
-            password:user.password
-        }, "4sad654t65j4yi51hg32n18wr74tqe6w4f32c1v3")
+            username:user.username,
+        }, JWT_SECRET)
 
-        const serialized = serialize("chat-token", token,{
+        res.cookie("chat-token", token,{
             httpOnly:true,
-            secure: process.env.NODE_ENV === "development",
-            sameSite:"strict",
-            path:"/",
-            maxAge:1000000
+            maxAge: 1000000,
+            secure: true,
+            sameSite:'none'
         })
 
-        res.setHeader("Set-Cookie", serialized)
         res.status(200).json({message:"User logged succesfully"})
     }
 }
 
 export const logoutUser = async (req: Request, res:Response) => {
-    res.setHeader("Set-Cookie",
-        serialize("chat-token", "",{
-            maxAge:0,
-            path:"/"
-        }))   
+    res.clearCookie("chat-token")
     res.end()
 }
 

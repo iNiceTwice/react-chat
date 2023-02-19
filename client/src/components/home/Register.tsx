@@ -32,7 +32,6 @@ const Register = () => {
     const registerUser = async (user:User):Promise<void> => {
       await axios.post("http://localhost:3000/register", user ,{ withCredentials: true })
     }             
-
     return ( 
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-12 text-slate-800 w-80">
