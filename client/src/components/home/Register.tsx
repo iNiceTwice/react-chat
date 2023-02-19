@@ -2,6 +2,7 @@ import { HomeContext } from "../../context/home/homeContext";
 import { useContext } from "react";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2"
 import * as yup from "yup"
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import axios from "axios"
 import { User } from "../../types";
@@ -15,6 +16,7 @@ const registerSchema = yup.object().shape({
 const Register = () => {
 
     const { setState } = useContext(HomeContext)
+    const navigate = useNavigate();
     const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues:{
         username:"",
@@ -31,6 +33,11 @@ const Register = () => {
 
     const registerUser = async (user:User):Promise<void> => {
       await axios.post("http://localhost:3000/register", user ,{ withCredentials: true })
+        .then((res)=>{
+            localStorage.setItem("chat-user", JSON.stringify(res.data.user))
+            navigate("/chat")
+        })
+        .catch(err => console.log(err))
     }             
     return ( 
         <>

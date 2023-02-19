@@ -2,9 +2,6 @@ import { Response, Request } from "express"
 import USERS from "../models/users"
 import { hashSync, genSaltSync, compareSync } from "bcrypt-nodejs"
 import { sign } from "jsonwebtoken"
-import { serialize } from "cookie"
-
-const JWT_SECRET = process.env.JWT_SECRET ?? ""
 
 export const registerUser = async (req: Request, res:Response) => {
     const { username, password, email } = req.body
@@ -30,7 +27,9 @@ export const registerUser = async (req: Request, res:Response) => {
             publicId:newUser.publicId,
             email:newUser.email,
             name:newUser.username,
-        }, JWT_SECRET)
+        }, process.env.JWT_SECRET as string ,{
+        expiresIn: '30d'
+    })
 
     res.cookie("chat-token", token,{
         httpOnly:true,
@@ -40,6 +39,11 @@ export const registerUser = async (req: Request, res:Response) => {
     })
     res.status(200).json({
         message:"User created succesfully",
+        user:{
+            publicId:newUser.publicId,
+            email:newUser.email,
+            name:newUser.username,
+        }
     })
 }
 
@@ -58,7 +62,9 @@ export const loginUser = async (req: Request, res:Response) => {
             publicId:user.publicId,
             email:user.email,
             username:user.username,
-        }, JWT_SECRET)
+        }, process.env.JWT_SECRET as string ,{
+        expiresIn: '30d'
+    })
 
         res.cookie("chat-token", token,{
             httpOnly:true,
@@ -67,7 +73,14 @@ export const loginUser = async (req: Request, res:Response) => {
             sameSite:'none'
         })
 
-        res.status(200).json({message:"User logged succesfully"})
+        res.status(200).json({
+            message:"User created succesfully",
+            user:{
+                publicId:user.publicId,
+                email:user.email,
+                name:user.username,
+            }
+        })
     }
 }
 
