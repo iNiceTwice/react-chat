@@ -1,7 +1,7 @@
 import { Response, Request } from "express"
+import { sign } from "jsonwebtoken"
 import USERS from "../models/users"
 import { hashSync, genSaltSync, compareSync } from "bcrypt-nodejs"
-import { sign } from "jsonwebtoken"
 
 export const registerUser = async (req: Request, res:Response) => {
 
@@ -33,7 +33,7 @@ export const registerUser = async (req: Request, res:Response) => {
         expiresIn: '30d'
     })
 
-    res.cookie("chat-token", token,{
+    res.cookie("chatToken", token,{
         httpOnly:true,
         maxAge: 1000000,
         secure: true,
@@ -68,7 +68,7 @@ export const loginUser = async (req: Request, res:Response) => {
         expiresIn: '30d'
     })
 
-        res.cookie("chat-token", token,{
+        res.cookie("chatToken", token,{
             httpOnly:true,
             maxAge: 1000000,
             secure: true,

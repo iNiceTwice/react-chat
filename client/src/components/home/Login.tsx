@@ -34,7 +34,7 @@ const Login = () => {
     const loginUser = async (user:Pick<User, "email">):Promise<void> => {
       await axios.post("http://localhost:3000/login", user, { withCredentials: true })
         .then((res)=>{
-            localStorage.setItem("chat-user", JSON.stringify(res.data.user))
+            localStorage.setItem("chatUser", JSON.stringify(res.data.user))
             navigate("/chat")
         })
         .catch(err => {

@@ -5,6 +5,7 @@ import { Server } from "socket.io"
 import { createServer } from "http"
 import * as dotenv from 'dotenv'
 import userRoutes from "./routes/userRoutes"
+import authRoutes from "./routes/authRoutes"
 import cookieParser from "cookie-parser"
 
 dotenv.config()
@@ -25,6 +26,7 @@ app.use(express.json());
 
 //api routes
 app.use(userRoutes)
+app.use(authRoutes)
 
 //server settings 
 app.set("port", process.env.PORT || 3000);
