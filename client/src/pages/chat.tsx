@@ -6,7 +6,7 @@ import ChatMessages from '../components/chat/ChatMessages'
 import ChatInput from '../components/chat/ChatInput'
 import SideMenu from '../components/chat/SideMenu'
 
-//const socket = io("http://localhost:3000")
+const socket = io("http://localhost:3000")
 
 function Chat() {  
   return (

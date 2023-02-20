@@ -70,7 +70,7 @@ export const loginUser = async (req: Request, res:Response) => {
 
         res.cookie("chatToken", token,{
             httpOnly:true,
-            maxAge: 1000000,
+            maxAge: 10000000000,
             secure: true,
             sameSite:'none'
         })

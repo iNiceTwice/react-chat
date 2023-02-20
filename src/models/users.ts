@@ -20,11 +20,8 @@ const userSchema = new Schema({
         type:String,
         required:true,
         trim:true
-    },
-    created_at:{
-        type:Date, 
-        default:Date.now,
-        required:true
-    }      
+    }
+},{
+    timestamps:true
 })
 export default model("chat-user", userSchema)
