@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { io, Socket } from "socket.io-client"
 import ContactList from '../components/chat/ContactList'
 import Heading from '../components/chat/Heading'
-import ChatMessages from '../components/chat/ChatMessages'
+import Conversation from '../components/chat/Conversation'
 import ChatInput from '../components/chat/ChatInput'
 import SideMenu from '../components/chat/SideMenu'
 
@@ -22,7 +22,7 @@ const Chat = () => {
           <ContactList/>
           <div className='flex flex-col h-full w-full'>
             <Heading/>
-            <ChatMessages/>
+            <Conversation/>
             <ChatInput/>
           </div>      
         </div>
