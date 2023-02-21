@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true
+    },
+    contacts:{
+        type:Array,
+        required:false,
     }
 },{
     timestamps:true
