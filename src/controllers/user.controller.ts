@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 import { sign } from "jsonwebtoken"
-import USERS from "../models/users"
+import USERS from "../models/users.model"
 import { hashSync, genSaltSync, compareSync } from "bcrypt-nodejs"
 
 export const registerUser = async (req: Request, res:Response) => {

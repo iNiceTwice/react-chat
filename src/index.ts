@@ -4,9 +4,10 @@ import cors from "cors";
 import { Server } from "socket.io"
 import { createServer } from "http"
 import * as dotenv from 'dotenv'
-import userRoutes from "./routes/userRoutes"
-import authRoutes from "./routes/authRoutes"
+import userRoutes from "./routes/user.routes"
+import authRoutes from "./routes/auth.routes"
 import cookieParser from "cookie-parser"
+import { SocketUser } from "./types";
 
 dotenv.config()
 const app = express();
@@ -41,8 +42,26 @@ const io = new Server(server, {
   }
 })
 
-io.on("connection", socket =>{
+let users:SocketUser[] = []
 
+const addUser = (userID:string, socketID:string):void => {
+  !users.some(user => user.socketID === socketID) && users.push({socketID, userID}) 
+}
+
+const removeUser = (socketID:string):void => {
+  users = users.filter((user) => user.socketID !== socketID);
+}
+
+io.on("connection", socket =>{
+  socket.on("add-user", (userID) => {
+    addUser(userID, socket.id)
+    console.log("hola", users)
+  })
+
+  socket.on("disconnect", () => {
+    removeUser(socket.id)
+    console.log(`Usuario ${socket.id} desconctado`)
+  })
   console.log(`Usuario ${socket.id} conectado` )
     
 })
