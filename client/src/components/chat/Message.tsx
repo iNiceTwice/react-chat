@@ -9,7 +9,7 @@ const Message = ({ own }:Props) => {
         <>
             {
                 own ? 
-                <div className="w-full flex flex-col items-end p-2">
+                <div className="w-full flex flex-col items-end p-2 first:mt-auto">
                     <div className="rounded-full p-6 bg-primary -mb-6"></div>
                     <div className="flex flex-col items-end mr-16">
                         <div className="flex gap-x-4 items-center text-slate-800/60">
