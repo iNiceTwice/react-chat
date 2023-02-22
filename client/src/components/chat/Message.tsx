@@ -1,3 +1,5 @@
+import { BsThreeDotsVertical } from "react-icons/bs"
+
 interface Props {
     own: boolean
 }
@@ -14,8 +16,11 @@ const Message = ({ own }:Props) => {
                             <p className="text-xs">15:33 PM</p>
                             <h2 className="font-semibold text-slate-800/90">Juan</h2>
                         </div>
-                        <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none w-fit h-fit text-white mt-2 shadow-sm">
-                            Soy un mensaje
+                        <div className="mt-2 flex gap-1">
+                            <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={20}/></button>
+                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none w-fit h-fit text-white shadow-sm">
+                                Soy un mensaje
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -27,8 +32,11 @@ const Message = ({ own }:Props) => {
                             <h2 className="font-semibold text-slate-800/90">Juan</h2>
                             <p className="text-xs">15:33 PM</p>
                         </div>
-                        <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none shadow-sm w-fit h-fit text-slate-800/80 mt-2 ">
-                            Soy un mensaje
+                        <div className="mt-2 flex gap-1">
+                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm">
+                                Soy un mensaje
+                            </div>
+                            <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={20}/></button>
                         </div>
                     </div>
                 </div>
