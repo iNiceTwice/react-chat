@@ -4,7 +4,7 @@ import { HiOutlineArrowLongLeft } from "react-icons/hi2"
 import * as yup from "yup"
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
-import axios from "axios"
+import axios from "axios";
 import { User } from "../../types";
 
 interface Error {
@@ -35,17 +35,17 @@ const Register = () => {
     validationSchema: registerSchema              
     })
 
-    const registerUser = async (user:User):Promise<void> => {
-      await axios.post("http://localhost:3000/register", user ,{ withCredentials: true })
-        .then((res)=>{
-            localStorage.setItem("chat-user", JSON.stringify(res.data.user))
-            navigate("/chat")
-        })
-        .catch(err => {
-            err.response.status !== 409 ?
-            setEmailError({isError:true, message:"Server error, try again."}) : setEmailError({isError:true, message:"Email already taken."})
-            console.log(err)
-        })
+    const registerUser = (user:User):void => {
+        axios.post("http://localhost:3000/register",user)
+            .then((res)=>{
+                localStorage.setItem("chatUser", JSON.stringify(res.data.user))
+                navigate("/chat")
+            })
+            .catch((err) => {
+                err.response.status !== 409 ?
+                setEmailError({isError:true, message:"Server error, try again."}) : setEmailError({isError:true, message:"Email already taken."})
+                console.log(err)
+            })
     }             
     return ( 
         <>

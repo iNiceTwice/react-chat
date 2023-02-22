@@ -1,6 +1,15 @@
-import mongoose from "mongoose"
+import { Schema, model } from "mongoose"
 
-const UserSchema = new mongoose.Schema({
+interface UserDocument {
+    publicId: string,
+    email:string,
+    username:string,
+    password:string,
+    profileImage:string
+    contacts:Array<string>,
+}
+
+const UserSchema = new Schema<UserDocument>({
     publicId:{
         type:String,
     },
@@ -21,11 +30,16 @@ const UserSchema = new mongoose.Schema({
         required:true,
         trim:true
     },
+    profileImage:{
+        type:String,
+        required:true
+    },
     contacts:{
-        type:Array,
-        required:false,
+        type:[String],
+        required:true,
+    
     }
 },{
     timestamps:true
 })
-export default mongoose.model("chat-user", UserSchema)
+export default model<UserDocument>("chat-user", UserSchema)

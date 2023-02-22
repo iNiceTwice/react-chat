@@ -13,7 +13,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.current = io("http://localhost:3000")
-    socket.current.emit("add-user", user.publicId )
+    socket.current.emit("add-user", user?.publicId )
   }, [socket]);
 
   return (

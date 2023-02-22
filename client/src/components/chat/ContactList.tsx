@@ -1,6 +1,23 @@
 import Contact from "./Contact";
+import axios from "axios"
+import { useState, useEffect } from "react";
 
 const ContactList = () => {
+
+    const user = JSON.parse(localStorage.getItem("chatUser") as string) 
+    const encodedUserID = user.publicId.replace("#","%23")
+    const [contacts, setContacts] = useState();
+
+    const getContacts = ():void => {
+        axios.get(`http://localhost:3000/getContacts?userID=${encodedUserID}`)
+            .then(res => setContacts(res.data))        
+            .catch(err => console.log(err))        
+    }
+
+    useEffect(() => {
+        getContacts()
+    }, []);
+    console.log(contacts)
     return ( 
         <>
             <div className="w-full mt-2">

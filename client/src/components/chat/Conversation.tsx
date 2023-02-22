@@ -6,10 +6,7 @@ const Conversation = () => {
             <Message own={true}/>
             <Message own={false}/>
             <Message own={true}/>
-            <Message own={true}/>
-      
-
-     
+            <Message own={true}/>   
         </div>
      );
 }

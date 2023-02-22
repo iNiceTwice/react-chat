@@ -55,14 +55,14 @@ const removeUser = (socketID:string):void => {
 io.on("connection", socket =>{
   socket.on("add-user", (userID) => {
     addUser(userID, socket.id)
-    console.log("hola", users)
+    //console.log("hola", users)
   })
 
   socket.on("disconnect", () => {
     removeUser(socket.id)
-    console.log(`Usuario ${socket.id} desconctado`)
+    //console.log(`Usuario ${socket.id} desconctado`)
   })
-  console.log(`Usuario ${socket.id} conectado` )
+  //console.log(`Usuario ${socket.id} conectado` )
     
 })
 

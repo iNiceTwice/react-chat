@@ -1,4 +1,11 @@
-const Contact = () => {
+interface ContactProps {
+    username?: string,
+    online?: boolean,
+    img?: string
+    lastMessage?: string
+}
+
+const Contact = ({username, online, img, lastMessage }:ContactProps) => {
     return ( 
         <>
             <button className="w-full flex items-center py-6 gap-4 hover:bg-terceary p-2 rounded-md">
