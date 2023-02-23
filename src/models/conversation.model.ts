@@ -1,12 +1,16 @@
-import mongoose from "mongoose"
+import { Schema, model } from "mongoose"
 
-const ConversationSchema = new mongoose.Schema(
+interface Conversation {
+  members: Array<string>
+}
+
+const ConversationSchema = new Schema<Conversation>(
   {
     members: {
-      type: Array,
+      type: [String],
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Conversation", ConversationSchema);
+module.exports = model<Conversation>("chat-conversation", ConversationSchema);

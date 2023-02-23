@@ -6,7 +6,6 @@ interface UserDocument {
     username:string,
     password:string,
     profileImage:string
-    contacts:Array<string>,
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -33,11 +32,6 @@ const UserSchema = new Schema<UserDocument>({
     profileImage:{
         type:String,
         required:true
-    },
-    contacts:{
-        type:[String],
-        required:true,
-    
     }
 },{
     timestamps:true
