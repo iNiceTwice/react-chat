@@ -11,3 +11,14 @@ export interface User {
     email:string,
     password:string
 }
+
+export interface ConversationData {
+    id:Types.ObjectId,
+    contactName:string,
+    contactImage:string,
+    contactID:string,
+    lastMessage:{
+        text:string,
+        sendedAt:string
+    }
+}

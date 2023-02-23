@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import axios from "axios"
 import { User } from "../../types";
+import ErrorMessage from "../ErrorMessage";
 
 interface Error {
     isError: Boolean,
-    message?: "Bad credentials." | "Server error, try again."
+    message: string
 }
 
 const loginSchema = yup.object().shape({
@@ -19,7 +20,7 @@ const loginSchema = yup.object().shape({
 const Login = () => {
 
     const { setState } = useContext(HomeContext)
-    const [ badCredentials, setBadCredentials ] = useState<Error>({isError:false})
+    const [ badCredentials, setBadCredentials ] = useState<Error>({isError:false, message:""})
     const navigate = useNavigate();
     const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues:{
@@ -48,8 +49,7 @@ const Login = () => {
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-12 text-slate-800 w-80">
                 {
-                    badCredentials.isError &&
-                    <div className="p-1 border border-red-300 bg-red-100 w-full rounded-full text-red-600 text-sm text-center">{ badCredentials.message }</div>
+                    badCredentials.isError && <ErrorMessage message={ badCredentials.message } />
                 }
                 <div className="flex flex-col gap-1">
                     <label>Email</label>

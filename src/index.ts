@@ -6,6 +6,7 @@ import { createServer } from "http"
 import * as dotenv from 'dotenv'
 import userRoutes from "./routes/user.routes"
 import authRoutes from "./routes/auth.routes"
+import conversationRoutes from "./routes/conversation.routes"
 import cookieParser from "cookie-parser"
 import { SocketUser } from "./types";
 
@@ -28,6 +29,7 @@ app.use(express.json());
 //api routes
 app.use(userRoutes)
 app.use(authRoutes)
+app.use(conversationRoutes)
 
 //server settings 
 app.set("port", process.env.PORT || 3000);

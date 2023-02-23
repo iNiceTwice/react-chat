@@ -1,7 +1,7 @@
-import { Response, Request, NextFunction } from "express"
+import { Response, Request } from "express"
 import { verify } from "jsonwebtoken"
 
-export const verifyToken = ( req:Request, res:Response, next:NextFunction ) => {
+export const verifyToken = ( req:Request, res:Response ) => {
     const { chatToken } = req.cookies
 
     if ( !chatToken ){
@@ -14,5 +14,5 @@ export const verifyToken = ( req:Request, res:Response, next:NextFunction ) => {
         return res.status(401).json({ message:"Invalid Token" })
     }
 
-    next()
+    return res.status(200).json({ message:"Token approved" })
 }

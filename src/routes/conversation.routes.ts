@@ -1,10 +1,16 @@
 import express from "express";
-import { addConversation, getConversations } from "../controllers/conversation.controller"
+import { addConversation, getConversation } from "../controllers/conversation.controller"
+import CONVERSATIONS from "../models/conversation.model"
 const router = express.Router()
 
-router.post("/add/conversations", registerUser)
+router.post("/add/conversation", addConversation)
 
-router.get("/get/conversations", getUsers)
+router.get("/get/conversation", getConversation)
+
+router.get("/get/conversations", async (req, res) => {
+    const conversations = await CONVERSATIONS.find()
+    res.send(conversations)
+})
 
 
 

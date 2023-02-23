@@ -1,12 +1,5 @@
 import { Schema, model } from "mongoose"
-
-interface UserDocument {
-    publicId: string,
-    email:string,
-    username:string,
-    password:string,
-    profileImage:string
-}
+import { UserDocument } from "../types"
 
 const UserSchema = new Schema<UserDocument>({
     publicId:{

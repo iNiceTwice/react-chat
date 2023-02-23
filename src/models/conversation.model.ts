@@ -1,10 +1,8 @@
 import { Schema, model } from "mongoose"
+import { ConversationDocument } from "../types";
 
-interface Conversation {
-  members: Array<string>
-}
 
-const ConversationSchema = new Schema<Conversation>(
+const ConversationSchema = new Schema<ConversationDocument>(
   {
     members: {
       type: [String],
@@ -13,4 +11,4 @@ const ConversationSchema = new Schema<Conversation>(
   { timestamps: true }
 );
 
-module.exports = model<Conversation>("chat-conversation", ConversationSchema);
+export default model<ConversationDocument>("chat-conversation", ConversationSchema);
