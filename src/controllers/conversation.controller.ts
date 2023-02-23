@@ -33,13 +33,13 @@ export const getConversation = async (req: Request, res:Response) => {
         const contactID = conversation.members.find((conversation:Object) => conversation !== userID) as string
         const contact = await USERS.find({publicId:contactID})
         conversationData.push({
-            id:conversation._id,    
+            id:conversation._id.toString(),    
             contactID:contact[0].publicId,
             contactImage:contact[0].profileImage,
             contactName:contact[0].username
         })
     })).then(() => {
-        return res.send(conversationData)
+        return res.status(200).send(conversationData)
     })
     
 }
