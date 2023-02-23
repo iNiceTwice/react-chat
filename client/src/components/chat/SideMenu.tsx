@@ -7,7 +7,7 @@ import { ChatState } from "../../types";
 const SideMenu = () => {
 
     const { state, setState } = useContext(ChatContext)
-
+    const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const buttonStyles = {
         selected:"relative p-3 rounded-xl bg-primary text-white" ,
         unselected:"relative p-3 rounded-xl hover:bg-primary hover:text-white text-slate-400 hover:shadow-sm transition-colors"
@@ -52,7 +52,9 @@ const SideMenu = () => {
 
             </div>
             <div className="flex flex-col mb-12">
-                <div className="p-4 rounded-full bg-primary"></div>
+                <button className="p-2 rounded-full bg-white hover:bg-primary transition-colors shadow-md">
+                    <img src={user.profileImage} alt={user.username} className="w-10"/>
+                </button>
             </div>
         </div>
      );

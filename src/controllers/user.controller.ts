@@ -45,6 +45,7 @@ export const registerUser = async (req: Request, res:Response):Promise<Object> =
         user:{
             publicId:newUser.publicId,
             email:newUser.email,
+            profileImage:newUser.profileImage,
             name:newUser.username,
         }
     })
@@ -82,6 +83,7 @@ export const loginUser = async (req: Request, res:Response):Promise<Object> => {
                 publicId:user.publicId,
                 email:user.email,
                 name:user.username,
+                profileImage:user.profileImage
             }
         })
     }
