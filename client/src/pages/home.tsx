@@ -2,8 +2,16 @@ import Logo from "../assets/logo.png"
 import AuthOptions from "../components/home/AuthOptions";
 import Login from "../components/home/Login";
 import { HomeProvider } from "../context/home/homeProvider";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(localStorage.getItem("chatUser")) navigate("/chat")
+    }, []);
 
     return (
         <HomeProvider>

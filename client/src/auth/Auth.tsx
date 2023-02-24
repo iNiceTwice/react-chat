@@ -8,7 +8,7 @@ interface Props {
 
 const Auth = ({children}:Props):JSX.Element => {
     
-    const [ error, setError ] = useState<Boolean | null>()
+    const [ error, setError ] = useState<Boolean | null>(null)
 
     const checkToken = async () => {
         await axios.get("http://localhost:3000/auth", { withCredentials:true })
@@ -24,7 +24,7 @@ const Auth = ({children}:Props):JSX.Element => {
         checkToken()
     },[])
 
-  if(error){
+  if(error || !localStorage.getItem("chatUser")){
     return <Navigate to="/" replace={true} />
   }
   return children
