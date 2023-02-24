@@ -1,9 +1,9 @@
 import express from "express";
-import { verifyToken } from "../controllers/auth.controller"
+import { authComplete, verifyToken } from "../controllers/auth.controller"
 
 const router = express.Router()
 
-router.get("/auth", verifyToken)
+router.get("/auth", verifyToken, authComplete)
 
 
 
