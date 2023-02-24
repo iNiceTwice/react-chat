@@ -89,9 +89,9 @@ export const loginUser = async (req: Request, res:Response):Promise<Object> => {
     }
 }
 
-export const logoutUser = async (req: Request, res:Response):Promise<Object> => {
-    res.clearCookie("chat-token")
-    return res.json({message:"User logout"})
+export const logoutUser = (req: Request, res:Response) => {
+    res.clearCookie("chatToken")
+    return res.end()
 }
 
 export const getUsers = async (req: Request, res:Response):Promise<Object> => {

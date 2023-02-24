@@ -3,14 +3,26 @@ import { CiChat1, CiSettings, CiFolderOn, CiUser, CiLogout } from "react-icons/c
 import { ChatContext } from "../../context/chat/chatContext";
 import { useContext } from "react";
 import { ChatState } from "../../types";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SideMenu = () => {
 
     const { state, setState } = useContext(ChatContext)
+    const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const buttonStyles = {
         selected:"relative p-3 rounded-xl bg-primary text-white" ,
         unselected:"relative p-3 rounded-xl hover:bg-primary hover:text-white text-slate-400 hover:shadow-sm transition-colors"
+    }
+
+    const handleLogout = () => {
+        axios.get("http://localhost:3000/logout", { withCredentials: true })
+            .then(() => {
+                navigate("/")
+                localStorage.removeItem("chatUser")
+            })
+            .catch((err)=> console.log(err))
     }
 
     return ( 
@@ -38,7 +50,7 @@ const SideMenu = () => {
                     <CiChat1 size={25}/>
                 </button>
                 <button 
-                    onClick={()=> setState({sideContent:"logout"})}
+                    onClick={ handleLogout }
                     className={ state.sideContent === "logout" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiLogout size={25}/>
