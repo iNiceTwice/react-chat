@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { Navigate } from "react-router-dom"
+import { useEffect } from "react"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 interface Props {
@@ -8,15 +8,16 @@ interface Props {
 
 const Auth = ({children}:Props):JSX.Element => {
     
-    const [ error, setError ] = useState<Boolean | null>()
+    const location = useLocation()
+    const navigate = useNavigate()
 
     const checkToken = async () => {
         await axios.get("http://localhost:3000/auth", { withCredentials:true })
             .then(res => {
-                res.status === 200 && setError(false)    
+                res.status === 200 && location.pathname === "/" && navigate("/chat")
             })
             .catch(err =>{
-                err.response.status === 401 && setError(true)
+                err.response.status === 401 && navigate("/")
             })
     }
     
@@ -24,9 +25,6 @@ const Auth = ({children}:Props):JSX.Element => {
         checkToken()
     },[])
 
-  if(error){
-    return <Navigate to="/" replace={true} />
-  }
   return children
 }
 
