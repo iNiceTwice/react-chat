@@ -28,10 +28,10 @@ const AddContact = () => {
 
     return (
         <>
-            <div className="w-full mt-2">
+            <div className="w-full p-5">
                 <h2 className="text-2xl py-4 text-primary font-bold">Add a Contact</h2>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col p-5">
                 <form onSubmit={ handleSubmit } className="flex flex-col gap-2 mt-16">
                     {
                         error.isError && <ErrorMessage message={error.message} />
@@ -42,7 +42,7 @@ const AddContact = () => {
                         placeholder="username#9430"
                         name="contact"
                         type="text" 
-                        className="px-4 py-2 rounded-full w-full bg-terceary shadow-sm outline-none" 
+                        className="px-4 py-2 rounded-full w-full bg-slate-100 shadow-sm outline-none" 
                         onChange={ (e) => setContactID(e.target.value) }
                     />
                     <button type="submit" className="px-4 py-2 bg-primary shadow-sm rounded-full text-white hover:bg-primary/80 transition-colors">Add</button>

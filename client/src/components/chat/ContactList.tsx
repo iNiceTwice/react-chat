@@ -27,11 +27,11 @@ const ContactList = () => {
 
     return ( 
         <>
-            <div className="w-full mt-2">
+            <div className="w-full p-5">
                 <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
             </div>
-            <div className="pb-4">
-                <input onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-terceary outline-none" placeholder="Search..."/>
+            <div className="px-4 mb-6">
+                <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
             </div>
             {
                 filter === "" ? 

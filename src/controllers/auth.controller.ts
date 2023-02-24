@@ -18,5 +18,5 @@ export const verifyToken = ( req:Request, res:Response, next:NextFunction ) => {
 }
 
 export const authComplete = ( req:Request, res:Response ) => {
-    res.send(200).json({message:"Auth completed successfully"})
+    res.status(200).json({message:"Auth completed successfully"})
 }
