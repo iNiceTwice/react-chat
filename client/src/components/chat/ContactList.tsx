@@ -1,15 +1,20 @@
 import Contact from "./Contact";
 import { useState, useEffect, useContext } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
+import { ContactData } from "../../types";
 
 const ContactList = () => {
 
-    const { state } = useContext(ChatContext)
+    const { state, setState } = useContext(ChatContext)
     const [ filter, setFilter ] = useState<string>("")
     const filteredContacts = state.contactsData?.filter((contact) => contact.contactName.includes(filter))
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value)
+    }
+    
+    const setCurrentContact = (contact:ContactData) => {
+        setState(prev => ({...prev, currentContact:contact}))
     }
 
     return ( 
@@ -23,15 +28,15 @@ const ContactList = () => {
             {
                 filter === "" ? 
                 state.contactsData?.map((contact)=>(
-                    <div key={contact.contactID}>
+                    <button onClick={() => setCurrentContact(contact)} key={contact.contactID}>
                         <Contact username={contact.contactName} img={contact.contactImage} />                     
-                    </div>
+                    </button>
                 ))
                 :
                 filteredContacts?.map((contact)=>(
-                    <div key={contact.contactID}>
+                    <button onClick={() => setCurrentContact(contact)} key={contact.contactID}>
                         <Contact username={contact.contactName} img={contact.contactImage} />                     
-                    </div>
+                    </button>
                 ))
             }
         </>
