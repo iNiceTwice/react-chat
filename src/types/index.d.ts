@@ -19,3 +19,10 @@ export interface UserDocument {
     password:string,
     profileImage:string
 }
+
+export interface MessageDocument {
+  _id:Types.ObjectId,
+  conversationId:String,
+  sender:string,
+  text:string
+}

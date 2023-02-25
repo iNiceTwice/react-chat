@@ -9,7 +9,7 @@ const Heading = () => {
         <div className="flex w-full h-32 p-2 gap-6 items-center border-b bg-secondary">
             <div className=" ml-6">
                 <div className="p-2 rounded-full bg-primary">
-                    <img src={ state.currentContact?.contactImage } alt={ state.currentContact?.contactName } className="w-10" />
+                    <img src={ state.currentContact?.contactImage } alt={ state.currentContact?.contactName } className="w-14" />
                 </div>
             </div>
             <div className="flex flex-col">

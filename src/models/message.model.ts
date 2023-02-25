@@ -1,6 +1,7 @@
-import mongoose from "mongoose"
+import { Schema, model } from "mongoose"
+import { MessageDocument } from "../types";
 
-const MessageSchema = new mongoose.Schema(
+const MessageSchema = new Schema<MessageDocument>(
   {
     conversationId: {
       type: String,
@@ -15,4 +16,4 @@ const MessageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("chat-message", MessageSchema);
+export default model<MessageDocument>("chat-message", MessageSchema);
