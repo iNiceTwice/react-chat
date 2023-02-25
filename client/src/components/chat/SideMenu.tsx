@@ -31,20 +31,20 @@ const SideMenu = () => {
                 <img src={Logo} width={30} className="hover:drop-shadow-xl"/>
             </button>
             <div className="flex flex-col gap-6">
-                <button onClick={()=> setState({sideContent:"addContact"})} className={ state.sideContent === "addContact" ? buttonStyles.selected : buttonStyles.unselected}>
+                <button onClick={()=> setState(prev => ({...prev, sideContent:"addContact"}))} className={ state.sideContent === "addContact" ? buttonStyles.selected : buttonStyles.unselected}>
                     <div className="flex items-center justify-center">
                         <CiUser className="-ml-1" size={25}/>
                         <span className="absolute top-2 left-[60%]">+</span>
                     </div>
                 </button>
                 <button 
-                    onClick={()=> setState({sideContent:"folders"})} 
+                    onClick={()=> setState(prev => ({...prev, sideContent:"folders"}))} 
                     className={ state.sideContent === "folders" ? buttonStyles.selected : buttonStyles.unselected}
                 >
                     <CiFolderOn size={25}/>
                 </button>
                 <button 
-                    onClick={()=> setState({sideContent:"contacts"})} 
+                    onClick={()=> setState(prev => ({...prev, sideContent:"contacts"}))} 
                     className={ state.sideContent === "contacts" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiChat1 size={25}/>
@@ -56,7 +56,7 @@ const SideMenu = () => {
                     <CiLogout size={25}/>
                 </button>
                 <button 
-                    onClick={()=> setState({sideContent:"settings"})} 
+                    onClick={()=> setState(prev => ({...prev, sideContent:"settings"}))} 
                     className={ state.sideContent === "settings" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiSettings size={25}/>

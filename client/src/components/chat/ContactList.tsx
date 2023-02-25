@@ -28,13 +28,13 @@ const ContactList = () => {
             {
                 filter === "" ? 
                 state.contactsData?.map((contact)=>(
-                    <button onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                    <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
                         <Contact username={contact.contactName} img={contact.contactImage} />                     
                     </button>
                 ))
                 :
                 filteredContacts?.map((contact)=>(
-                    <button onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                    <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
                         <Contact username={contact.contactName} img={contact.contactImage} />                     
                     </button>
                 ))

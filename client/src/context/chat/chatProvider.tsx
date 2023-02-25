@@ -29,7 +29,7 @@ export const ChatProvider = ({children}:Props) => {
 
     const getContacts = ():void => {
         axios.get(`http://localhost:3000/get/conversation?userID=${encodedUserID}`, { withCredentials: true })
-            .then(res => setState(prev => ({...prev, contactsData:res.data})))        
+            .then(res => setState(prev => ({...prev, contactsData:res.data, currentContact:res.data[0]})))        
             .catch(err => console.log(err))        
     }
 
