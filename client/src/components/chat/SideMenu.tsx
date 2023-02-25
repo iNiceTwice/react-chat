@@ -26,14 +26,14 @@ const SideMenu = () => {
     }
 
     return ( 
-        <div className="h-full flex flex-col justify-between items-center w-24">
+        <div className="h-full flex flex-col justify-between items-center px-1 w-24 lg:w-28">
             <button className="mt-12">
-                <img src={Logo} width={30} className="hover:drop-shadow-xl"/>
+                <img src={Logo} width={35} className="hover:rotate-12 transition-all"/>
             </button>
             <div className="flex flex-col gap-6">
                 <button onClick={()=> setState(prev => ({...prev, sideContent:"addContact"}))} className={ state.sideContent === "addContact" ? buttonStyles.selected : buttonStyles.unselected}>
                     <div className="flex items-center justify-center">
-                        <CiUser className="-ml-1" size={25}/>
+                        <CiUser className="-ml-1" size={24}/>
                         <span className="absolute top-2 left-[60%]">+</span>
                     </div>
                 </button>
@@ -41,30 +41,30 @@ const SideMenu = () => {
                     onClick={()=> setState(prev => ({...prev, sideContent:"folders"}))} 
                     className={ state.sideContent === "folders" ? buttonStyles.selected : buttonStyles.unselected}
                 >
-                    <CiFolderOn size={25}/>
+                    <CiFolderOn size={24}/>
                 </button>
                 <button 
                     onClick={()=> setState(prev => ({...prev, sideContent:"contacts"}))} 
                     className={ state.sideContent === "contacts" ? buttonStyles.selected : buttonStyles.unselected }
                 >
-                    <CiChat1 size={25}/>
+                    <CiChat1 size={24}/>
                 </button>
                 <button 
                     onClick={ handleLogout }
                     className={ state.sideContent === "logout" ? buttonStyles.selected : buttonStyles.unselected }
                 >
-                    <CiLogout size={25}/>
+                    <CiLogout size={24}/>
                 </button>
                 <button 
                     onClick={()=> setState(prev => ({...prev, sideContent:"settings"}))} 
                     className={ state.sideContent === "settings" ? buttonStyles.selected : buttonStyles.unselected }
                 >
-                    <CiSettings size={25}/>
+                    <CiSettings size={24}/>
                 </button>
 
             </div>
             <div className="flex flex-col mb-12">
-                <button className="p-2 rounded-full bg-white hover:bg-primary transition-colors shadow-md">
+                <button onClick={()=> setState(prev => ({...prev, sideContent:"settings"}))} className="p-2 rounded-full bg-white hover:bg-primary transition-colors shadow-md">
                     <img src={user.profileImage} alt={user.username} className="w-10"/>
                 </button>
             </div>

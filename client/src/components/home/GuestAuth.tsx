@@ -15,7 +15,7 @@ const GuestAuth = () => {
         <>
             <div className="flex flex-col justify-center items-center gap-4 ml-14">
                 <div className=" ">
-                    <img className="object-cover object-center rounded-full w-56 h-56 bg-primary shadow-primary/40 shadow-lg" src={`https://api.dicebear.com/5.x/big-smile/svg?seed=${username}`}/>
+                    <img className="rounded-full w-56 h-56 bg-primary shadow-primary/40 shadow-lg" src={`https://api.dicebear.com/5.x/big-smile/svg?seed=${username}`}/>
                 </div>
                 <form className="flex flex-col w-72 gap-3">
                     <input onChange={handleChange} className="py-1 px-4 outline-none rounded-full shadow-sm" placeholder="Your username..."/>

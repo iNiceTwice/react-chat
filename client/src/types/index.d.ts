@@ -24,3 +24,11 @@ export interface ContactData {
         sendedAt:string
     }
 }
+
+export interface MessageFormat {
+  _id:Types.ObjectId,
+  conversationId:String,
+  sender:string,
+  text:string,
+  createdAt:string
+}
