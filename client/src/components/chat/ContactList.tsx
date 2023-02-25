@@ -1,29 +1,16 @@
 import Contact from "./Contact";
-import axios from "axios"
-import { useState, useEffect } from "react";
-import { ConversationData } from "../../types";
+import { useState, useEffect, useContext } from "react";
+import { ChatContext } from "../../context/chat/chatContext";
 
 const ContactList = () => {
 
-    const user = JSON.parse(localStorage.getItem("chatUser") as string) 
-    const encodedUserID = user.publicId.replace("#","%23")
-    const [ contacts, setContacts ] = useState<ConversationData[]>()
+    const { state } = useContext(ChatContext)
     const [ filter, setFilter ] = useState<string>("")
-    const filteredContacts = contacts?.filter((contact) => contact.contactName.includes(filter))
-
-    const getContacts = ():void => {
-        axios.get(`http://localhost:3000/get/conversation?userID=${encodedUserID}`, { withCredentials: true })
-            .then(res => setContacts(res.data))        
-            .catch(err => console.log(err))        
-    }
+    const filteredContacts = state.contactsData?.filter((contact) => contact.contactName.includes(filter))
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value)
     }
-
-    useEffect(() => {
-        getContacts()
-    }, []);
 
     return ( 
         <>
@@ -35,7 +22,7 @@ const ContactList = () => {
             </div>
             {
                 filter === "" ? 
-                contacts?.map((contact)=>(
+                state.contactsData?.map((contact)=>(
                     <div key={contact.contactID}>
                         <Contact username={contact.contactName} img={contact.contactImage} />                     
                     </div>

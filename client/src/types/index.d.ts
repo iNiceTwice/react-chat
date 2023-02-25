@@ -3,7 +3,9 @@ export interface HomeState {
 }
 
 export interface ChatState {
-    sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings"
+    sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings",
+    contactsData: ContactData[],
+    currentContact:ContactData
 }
 
 export interface User {
@@ -12,12 +14,12 @@ export interface User {
     password:string
 }
 
-export interface ConversationData {
+export interface ContactData {
     id:Types.ObjectId,
     contactName:string,
     contactImage:string,
     contactID:string,
-    lastMessage:{
+    lastMessage?:{
         text:string,
         sendedAt:string
     }
