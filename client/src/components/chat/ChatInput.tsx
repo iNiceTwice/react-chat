@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../api/axios.config";
 import { useContext, useState } from "react"
 import { ChatContext } from "../../context/chat/chatContext";
 
@@ -10,7 +10,7 @@ const ChatInput = () => {
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        axios.post("http://localhost:3000/set/message", {
+        axios.post("/message", {
             conversationId: state.currentContact.id,
             sender:user.name,
             text:message    

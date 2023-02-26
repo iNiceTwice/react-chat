@@ -1,5 +1,5 @@
 import Contact from "./Contact";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
 import { ContactData } from "../../types";
 

@@ -4,7 +4,7 @@ import { HiOutlineArrowLongLeft } from "react-icons/hi2"
 import * as yup from "yup"
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
-import axios from "axios";
+import axios from "../../api/axios.config";
 import { User } from "../../types";
 
 interface Error {
@@ -36,7 +36,7 @@ const Register = () => {
     })
 
     const registerUser = (user:User):void => {
-        axios.post("http://localhost:3000/register",user)
+        axios.post("/register",user)
             .then((res)=>{
                 localStorage.setItem("chatUser", JSON.stringify(res.data.user))
                 navigate("/chat")

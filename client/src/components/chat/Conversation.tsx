@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../api/axios.config";
 import { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
 import { MessageFormat } from "../../types";
@@ -11,7 +11,7 @@ const Conversation = () => {
     const [ messages, setMessages ] = useState<MessageFormat[]>()
 
     const getMessages = () => {
-        axios.get(`http://localhost:3001/get/messages?id=${state.currentContact.id}`, { withCredentials: true })
+        axios.get(`/messages?id=${state.currentContact.id}`)
             .then(res => setMessages(res.data))
             .catch(err => console.log(err))    
     }

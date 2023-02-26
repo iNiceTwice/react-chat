@@ -54,7 +54,7 @@ export const ChatProvider = ({children}:Props) => {
             value={{
                 state,
                 setState,
-                addUserSocket
+                //sendMessage
             }}
         >
             { children }

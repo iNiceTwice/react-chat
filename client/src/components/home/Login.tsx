@@ -4,7 +4,7 @@ import { HiOutlineArrowLongLeft } from "react-icons/hi2"
 import * as yup from "yup"
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
-import axios from "axios"
+import axios from "../../api/axios.config"
 import { User } from "../../types";
 import ErrorMessage from "../ErrorMessage";
 
@@ -32,17 +32,17 @@ const Login = () => {
     validationSchema: loginSchema              
     })
 
-    const loginUser = async (user:Pick<User, "email">):Promise<void> => {
-      await axios.post("http://localhost:3000/login", user, { withCredentials: true })
-        .then((res)=>{
-            localStorage.setItem("chatUser", JSON.stringify(res.data.user))
-            navigate("/chat")
-        })
-        .catch(err => {
-            err.response.status !== 401 ?
-            setBadCredentials({isError:true, message:"Server error, try again."}) : setBadCredentials({isError:true, message:"Bad credentials."})
-            console.log(err)
-        })
+    const loginUser = (user:Pick<User, "email">):void => {
+        axios.post("/login", user)
+            .then((res)=>{
+                localStorage.setItem("chatUser", JSON.stringify(res.data.user))
+                navigate("/chat")
+            })
+            .catch(err => {
+                err.response.status !== 401 ?
+                setBadCredentials({isError:true, message:"Server error, try again."}) : setBadCredentials({isError:true, message:"Bad credentials."})
+                console.log(err)
+            })
     }       
 
     return ( 

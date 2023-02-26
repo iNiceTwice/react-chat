@@ -3,7 +3,7 @@ import { CiChat1, CiSettings, CiFolderOn, CiUser, CiLogout } from "react-icons/c
 import { ChatContext } from "../../context/chat/chatContext";
 import { useContext } from "react";
 import { ChatState } from "../../types";
-import axios from "axios";
+import axios from "../../api/axios.config";
 import { useNavigate } from "react-router-dom";
 
 const SideMenu = () => {
@@ -17,7 +17,7 @@ const SideMenu = () => {
     }
 
     const handleLogout = () => {
-        axios.get("http://localhost:3000/logout", { withCredentials: true })
+        axios.get("/logout", { withCredentials: true })
             .then(() => {
                 navigate("/")
                 localStorage.removeItem("chatUser")

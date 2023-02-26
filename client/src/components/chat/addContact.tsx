@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from "axios"
+import axios from "../../api/axios.config"
 import ErrorMessage from "../ErrorMessage"
 
 interface Error {
@@ -18,7 +18,7 @@ const AddContact = () => {
     
     const handleSubmit = (e:React.SyntheticEvent) => {
         e.preventDefault()
-        axios.post(`http://localhost:3000/add/conversation`,{ user:user.publicId, newContact: contactID})
+        axios.post(`/conversation`,{ user:user.publicId, newContact: contactID})
             .then(res => console.log(res.data))
             .catch(err => {
                 console.log(err)
