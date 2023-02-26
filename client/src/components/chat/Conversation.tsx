@@ -7,15 +7,15 @@ import Message from "./Message";
 const Conversation = () => {
 
     const user = JSON.parse(localStorage.getItem("chatUser") as string)
-    const { state } = useContext(ChatContext)
+    const { state, addUserSocket } = useContext(ChatContext)
     const [ messages, setMessages ] = useState<MessageFormat[]>()
 
     const getMessages = () => {
-        axios.get(`http://localhost:3000/get/messages?id=${state.currentContact.id}`, { withCredentials: true })
+        axios.get(`http://localhost:3001/get/messages?id=${state.currentContact.id}`, { withCredentials: true })
             .then(res => setMessages(res.data))
             .catch(err => console.log(err))    
     }
-    console.log(messages)
+    
     useEffect(() => {
        getMessages() 
     }, [state.currentContact]);
