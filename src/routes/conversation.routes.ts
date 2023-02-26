@@ -4,11 +4,11 @@ import { addConversation, getConversation } from "../controllers/conversation.co
 import CONVERSATIONS from "../models/conversation.model"
 const router = express.Router()
 
-router.post("/add/conversation",verifyToken , addConversation)
+router.post("/conversation",verifyToken , addConversation)
 
-router.get("/get/conversation",verifyToken , getConversation)
+router.get("/conversation",verifyToken , getConversation)
 
-router.get("/get/conversations", async (req, res) => {
+router.get("/conversations", async (req, res) => {
     const conversations = await CONVERSATIONS.find()
     res.send(conversations)
 })

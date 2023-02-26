@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI ?? "")
 .catch(err => console.log(err));
 
 //middlewares
-app.use(cors({origin:"http://localhost:3001", credentials:true}));
+app.use(cors({origin:"http://localhost:3000", credentials:true}));
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -34,14 +34,14 @@ app.use(conversationRoutes)
 app.use(messagesRoutes)
 
 //server settings 
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3001);
 server.listen(app.get("port"), () => {
   console.log("- Server Online on " + app.get("port") + " -");
 });
 
 const io = new Server(server, {
   cors:{
-    origin:"http://localhost:3001",
+    origin:"http://localhost:3000",
     methods:["GET","POST"]
   }
 })
@@ -53,21 +53,22 @@ const addUser = (userID:string, socketID:string):void => {
 }
 
 const removeUser = (socketID:string):void => {
-  users = users.filter((user) => user.socketID !== socketID);
+  users = users.filter((user) => user.socketID !== socketID); 
 }
 
 io.on("connection", socket =>{
   socket.on("add-user", (userID) => {
     addUser(userID, socket.id)
     //console.log("hola", users)
+    console.log(users)
   })
 
   socket.on("disconnect", () => {
     removeUser(socket.id)
-    //console.log(`Usuario ${socket.id} desconctado`)
+    console.log(`Usuario ${socket.id} desconctado`)
   })
-  //console.log(`Usuario ${socket.id} conectado` )
-    
+  console.log(`Usuario ${socket.id} conectado` )
+  
 })
 
 
