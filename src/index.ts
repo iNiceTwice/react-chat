@@ -56,11 +56,25 @@ const removeUser = (socketID:string):void => {
   users = users.filter((user) => user.socketID !== socketID); 
 }
 
-io.on("connection", socket =>{
+const getUser = (userID:string):SocketUser => {
+  return users.find((user) => user.userID === userID)!;
+}
+
+io.on("connection", socket => {
+
   socket.on("add-user", (userID) => {
     addUser(userID, socket.id)
     //console.log("hola", users)
-    console.log(users)
+    //console.log(users)
+  })
+
+  socket.on("send-message", ({sender, receiver, text }) => {
+    const user = getUser(receiver)
+    console.log(sender, receiver, text)
+    io.to(user.socketID).emit("get-message", {
+      sender,
+      text
+    })
   })
 
   socket.on("disconnect", () => {

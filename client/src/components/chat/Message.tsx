@@ -27,9 +27,9 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                             <p className="text-xs">{ localTime }</p>
                             <h2 className="font-semibold text-lg text-slate-800/90">You</h2>
                         </div>
-                        <div className="mt-2 flex gap-1">
+                        <div className="mt-2 flex gap-1 w-full">
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>
-                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none w-fit h-fit text-white shadow-sm">
+                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none max-w-md lg:max-w-xl break-words text-justify h-fit text-white shadow-sm">
                                 {text}
                             </div>
                         </div>
@@ -46,7 +46,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                             <p className="text-xs">{ localTime }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm">
+                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-md lg:max-w-xl break-words text-justify">
                                 {text}
                             </div>
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>

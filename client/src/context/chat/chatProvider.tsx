@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { ChatContext } from "./chatContext"
-import { ChatState } from "../../types";
+import { ChatState, SocketMessage } from "../../types";
 import { io, Socket } from "socket.io-client"
 import axios from "../../api/axios.config"
 
@@ -11,6 +11,11 @@ interface Props {
 const initialState:ChatState = {
     sideContent:"contacts",
     contactsData:[],
+    currentMessage:{
+        sender:"",
+        receiver:"",
+        text:""
+    },
     currentContact:{
         id:"",
         contactName:"",
@@ -36,7 +41,16 @@ export const ChatProvider = ({children}:Props) => {
             .catch(err => console.log(err))        
     }
 
-    const sendMessage = (senderID:string) => {
+    const sendMessage = ({sender, receiver, text}:Pick<SocketMessage, "sender" | "text" | "receiver">):void => {
+        socket.current?.emit("send-message", {sender, receiver, text})
+        setState(prev => ({...prev, currentMessage:{sender, receiver, text}}))
+    }
+
+    const getMessage = () => {
+        socket.current?.on("get-message", message => {
+            setState(prev => ({...prev, currentMessage:message}))
+            console.log(message, "from provider")
+        })
     }
     
     useEffect(() => {
@@ -44,17 +58,21 @@ export const ChatProvider = ({children}:Props) => {
     }, []);
     
     useEffect(() => {
-        socket.current = io("http://localhost:3000")
-        socket.current.emit("add-user", user.publicId )
-        
+        socket.current = io("http://localhost:3001")
+        socket.current.emit("add-user", user.publicId)
     }, [socket]);    
+    
+    
+    useEffect(() => {
+        getMessage()
+    }, [state.currentMessage, state.currentContact]);
 
     return (
         <ChatContext.Provider
             value={{
                 state,
                 setState,
-                //sendMessage
+                sendMessage
             }}
         >
             { children }

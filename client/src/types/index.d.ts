@@ -5,6 +5,7 @@ export interface HomeState {
 export interface ChatState {
     sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings",
     contactsData: ContactData[],
+    currentMessage:Pick<SocketMessage, "sender" | "text" | "receiver">
     currentContact:ContactData
 }
 
@@ -31,4 +32,12 @@ export interface MessageFormat {
   sender:string,
   text:string,
   createdAt:string
+}
+
+interface SocketMessage extends MessageFormat {
+    receiver:string
+}
+
+export declare global {
+  const Date: new () => Date
 }

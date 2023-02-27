@@ -4,7 +4,7 @@ import { ChatContext } from "../../context/chat/chatContext";
 
 const ChatInput = () => {
     
-    const { state } = useContext(ChatContext)
+    const { state, sendMessage } = useContext(ChatContext)
     const user = JSON.parse(localStorage.getItem("chatUser") as string)
     const [ message, setMessage ] = useState<string>("")
 
@@ -15,7 +15,14 @@ const ChatInput = () => {
             sender:user.name,
             text:message    
         }, { withCredentials: true })
-            .then(() => setMessage(""))
+            .then(() => {
+                setMessage("")
+                sendMessage({
+                    receiver:state.currentContact.contactID,
+                    sender:user.name,
+                    text:message
+                })
+            })
             .catch(err => console.log(err))    
     }
 
