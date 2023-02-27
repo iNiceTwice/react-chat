@@ -38,7 +38,8 @@ export const ChatProvider = ({children}:Props) => {
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
             .then(res => setState(prev => ({...prev, contactsData:res.data, currentContact:res.data[0]})))        
-            .catch(err => console.log(err))        
+            .catch(err => console.log(err))      
+            console.log(state.contactsData, "sexxxxxxxxxxxxxxxxxx")  
     }
 
     const sendMessage = ({sender, receiver, text}:Pick<SocketMessage, "sender" | "text" | "receiver">):void => {

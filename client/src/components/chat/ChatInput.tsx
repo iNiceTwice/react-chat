@@ -14,7 +14,7 @@ const ChatInput = () => {
             conversationId: state.currentContact.id,
             sender:user.name,
             text:message    
-        }, { withCredentials: true })
+        })
             .then(() => {
                 setMessage("")
                 sendMessage({
@@ -23,7 +23,7 @@ const ChatInput = () => {
                     text:message
                 })
             })
-            .catch(err => console.log(err))    
+            .catch(err => console.log(err))   
     }
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {

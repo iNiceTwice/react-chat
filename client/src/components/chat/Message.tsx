@@ -18,7 +18,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
         <>
             {
                 own ? 
-                <div className="w-full flex flex-col items-end py-4 px-10">
+                <div className=" w-full flex flex-col items-end py-4 pr-4 lg:pr-10">
                     <div className="rounded-full p-2 bg-primary -mb-16">
                         <img src={user.profileImage} alt={from} className="w-10 lg:w-12" />
                     </div>
@@ -29,14 +29,14 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                         </div>
                         <div className="mt-2 flex gap-1 w-full">
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>
-                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none max-w-md lg:max-w-xl break-words text-justify h-fit text-white shadow-sm">
+                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[18rem] lg:max-w-xl break-words h-fit">
                                 {text}
                             </div>
                         </div>
                     </div>
                 </div>
                 :
-                <div className="w-full flex flex-col items-start py-4 px-10">
+                <div className="w-full flex flex-col items-start py-4 pl-4">
                     <div className="rounded-full p-2 bg-primary -mb-16">
                         <img src={image} alt={from} className="w-10 lg:w-12" />
                     </div>
@@ -46,7 +46,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                             <p className="text-xs">{ localTime }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-md lg:max-w-xl break-words text-justify">
+                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[18rem] lg:max-w-xl break-words">
                                 {text}
                             </div>
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>

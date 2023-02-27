@@ -17,6 +17,8 @@ const ContactList = () => {
         setState(prev => ({...prev, currentContact:contact}))
     }
 
+    //console.log(state.contactsData[0].lastMessage?.text)
+
     return ( 
         <>
             <div className="w-full p-5">
@@ -25,20 +27,22 @@ const ContactList = () => {
             <div className="px-4 mb-6">
                 <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
             </div>
-            {
-                filter === "" ? 
-                state.contactsData?.map((contact)=>(
-                    <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
-                        <Contact username={contact.contactName} img={contact.contactImage} />                     
-                    </button>
-                ))
-                :
-                filteredContacts?.map((contact)=>(
-                    <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
-                        <Contact username={contact.contactName} img={contact.contactImage} />                     
-                    </button>
-                ))
-            }
+            <div className="flex flex-col w-full">
+                {
+                    filter === "" ? 
+                    state.contactsData?.map((contact)=>(
+                        <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                            <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text} />                     
+                        </button>
+                    ))
+                    :
+                    filteredContacts?.map((contact)=>(
+                        <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                            <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text}/>                     
+                        </button>
+                    ))
+                }
+            </div>
         </>
      );
 }

@@ -34,7 +34,7 @@ const Conversation = () => {
     }, [messages, newMessages]);
 
     return ( 
-        <div className="flex flex-col h-full overflow-y-auto">
+        <div className="flex flex-col w-full h-full overflow-y-auto">
             {
                 messages?.map((message) => (
                     <div ref={scrollRef} className="w-full first:mt-auto" key={message._id}>
