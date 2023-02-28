@@ -12,11 +12,12 @@ const initialState:ChatState = {
     sideContent:"contacts",
     contactsData:[],
     currentMessage:{
+        conversationId:"",
         sender:"",
         receiver:"",
         text:""
     },
-    currentContact:{
+    currentConversation:{
         id:"",
         contactName:"",
         contactImage:"",
@@ -37,14 +38,13 @@ export const ChatProvider = ({children}:Props) => {
 
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
-            .then(res => setState(prev => ({...prev, contactsData:res.data, currentContact:res.data[0]})))        
-            .catch(err => console.log(err))      
-            console.log(state.contactsData, "sexxxxxxxxxxxxxxxxxx")  
+            .then(res => setState(prev => ({...prev, contactsData:res.data, currentConversation:res.data[0]})))        
+            .catch(err => console.log(err))       
     }
 
-    const sendMessage = ({sender, receiver, text}:Pick<SocketMessage, "sender" | "text" | "receiver">):void => {
-        socket.current?.emit("send-message", {sender, receiver, text})
-        setState(prev => ({...prev, currentMessage:{sender, receiver, text}}))
+    const sendMessage = ({sender, receiver, text, conversationId}:Omit<SocketMessage, "createdAt" | "_id">):void => {
+        socket.current?.emit("send-message", {sender, receiver, text, conversationId})
+        setState(prev => ({...prev, currentMessage:{conversationId, sender, receiver, text}}))
     }
 
     const getMessage = () => {
@@ -66,7 +66,7 @@ export const ChatProvider = ({children}:Props) => {
     
     useEffect(() => {
         getMessage()
-    }, [state.currentMessage, state.currentContact]);
+    }, [state.currentMessage, state.currentConversation]);
 
     return (
         <ChatContext.Provider

@@ -40,6 +40,7 @@ export const getConversation = async (req: Request, res:Response) => {
             contactImage:contact[0].profileImage,
             contactName:contact[0].username,
             lastMessage:{
+                sender:currentMessage?.sender,
                 text:currentMessage?.text,
                 sendedAt:currentMessage?.createdAt
             }

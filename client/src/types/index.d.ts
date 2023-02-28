@@ -5,8 +5,8 @@ export interface HomeState {
 export interface ChatState {
     sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings",
     contactsData: ContactData[],
-    currentMessage:Pick<SocketMessage, "sender" | "text" | "receiver">
-    currentContact:ContactData
+    currentMessage:Omit<SocketMessage, "createdAt" | "_id">
+    currentConversation:ContactData
 }
 
 export interface User {
@@ -28,14 +28,14 @@ export interface ContactData {
 
 export interface MessageFormat {
   _id:Types.ObjectId,
-  conversationId:String,
+  conversationId:string,
   sender:string,
   text:string,
   createdAt:string
 }
 
 interface SocketMessage extends MessageFormat {
-    receiver:string
+    receiver:string,
 }
 
 export declare global {

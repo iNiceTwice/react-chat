@@ -68,13 +68,17 @@ io.on("connection", socket => {
     //console.log(users)
   })
 
-  socket.on("send-message", ({sender, receiver, text }) => {
+  socket.on("send-message", ({sender, receiver, text, conversationId }) => {
     const user = getUser(receiver)
     console.log(sender, receiver, text)
-    io.to(user.socketID).emit("get-message", {
-      sender,
-      text
-    })
+    if(user){
+      io.to(user.socketID).emit("get-message", {
+        conversationId,
+        sender,
+        receiver,
+        text
+      })
+    }
   })
 
   socket.on("disconnect", () => {

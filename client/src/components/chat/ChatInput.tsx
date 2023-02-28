@@ -11,15 +11,16 @@ const ChatInput = () => {
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         axios.post("/message", {
-            conversationId: state.currentContact.id,
+            conversationId: state.currentConversation.id,
             sender:user.name,
             text:message    
         })
             .then(() => {
                 setMessage("")
                 sendMessage({
-                    receiver:state.currentContact.contactID,
+                    conversationId:state.currentConversation.id,
                     sender:user.name,
+                    receiver:state.currentConversation.contactID,
                     text:message
                 })
             })

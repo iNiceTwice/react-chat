@@ -1,4 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs"
+import { ChatContext } from "../../context/chat/chatContext"
+import { useContext } from "react"
 
 interface Props {
     own: boolean,
@@ -9,11 +11,12 @@ interface Props {
 }
 
 const Message = ({ own, from, text, image, sendedAt }:Props) => {
-   
+
+    const { state } = useContext(ChatContext)
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const time = new Date(sendedAt)
     const localTime = time.toTimeString().slice(0,5)
-
+    console.log(state.currentConversation)
     return ( 
         <>
             {

@@ -13,11 +13,9 @@ const ContactList = () => {
         setFilter(e.target.value)
     }
     
-    const setCurrentContact = (contact:ContactData) => {
-        setState(prev => ({...prev, currentContact:contact}))
+    const setCurrentConversation = (contact:ContactData) => {
+        setState(prev => ({...prev, currentConversation:contact}))
     }
-
-    //console.log(state.contactsData[0].lastMessage?.text)
 
     return ( 
         <>
@@ -31,13 +29,13 @@ const ContactList = () => {
                 {
                     filter === "" ? 
                     state.contactsData?.map((contact)=>(
-                        <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                        <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
                             <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text} />                     
                         </button>
                     ))
                     :
                     filteredContacts?.map((contact)=>(
-                        <button className="w-full" onClick={() => setCurrentContact(contact)} key={contact.contactID}>
+                        <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
                             <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text}/>                     
                         </button>
                     ))
