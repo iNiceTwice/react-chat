@@ -33,7 +33,7 @@ export const getConversation = async (req: Request, res:Response) => {
     Promise.all(conversations.map(async (conversation:ConversationDocument)=>{
         const contactID = conversation.members.find((conversation:Object) => conversation !== userID) as string
         const contact = await USERS.find({publicId:contactID})
-        const currentMessage = await MESSAGES.findOne({conversationId:conversation._id}).sort({ updatedAt: -1 })
+        const currentMessage = await MESSAGES.findOne({conversationId:conversation._id}).sort({ createdAt: -1 })
         conversationData.push({
             id:conversation._id.toString(),    
             contactID:contact[0].publicId,
@@ -42,7 +42,7 @@ export const getConversation = async (req: Request, res:Response) => {
             lastMessage:{
                 sender:currentMessage?.sender,
                 text:currentMessage?.text,
-                sendedAt:currentMessage?.createdAt
+                sendedAt:currentMessage?.createdAt.toLocaleTimeString().slice(0,5)
             }
         })
     })).then(() => {

@@ -21,6 +21,7 @@ export interface ContactData {
     contactImage:string,
     contactID:string,
     lastMessage?:{
+        sender:string
         text:string,
         sendedAt:string
     }

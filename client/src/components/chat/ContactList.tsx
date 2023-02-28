@@ -5,6 +5,7 @@ import { ContactData } from "../../types";
 
 const ContactList = () => {
 
+    const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const { state, setState } = useContext(ChatContext)
     const [ filter, setFilter ] = useState<string>("")
     const filteredContacts = state.contactsData?.filter((contact) => contact.contactName.includes(filter))
@@ -30,13 +31,23 @@ const ContactList = () => {
                     filter === "" ? 
                     state.contactsData?.map((contact)=>(
                         <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
-                            <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text} />                     
+                            <Contact 
+                                username={contact.contactName} 
+                                img={contact.contactImage} 
+                                lastMessage={contact.lastMessage?.sender === user.name ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
+                                lastMessageTime={contact.lastMessage?.sendedAt} 
+                            />                     
                         </button>
                     ))
                     :
                     filteredContacts?.map((contact)=>(
                         <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
-                            <Contact username={contact.contactName} img={contact.contactImage} lastMessage={contact.lastMessage?.text}/>                     
+                            <Contact 
+                                username={contact.contactName} 
+                                img={contact.contactImage} 
+                                lastMessage={contact.contactID === user.publicId ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
+                                lastMessageTime={contact.lastMessage?.sendedAt}
+                            />                     
                         </button>
                     ))
                 }

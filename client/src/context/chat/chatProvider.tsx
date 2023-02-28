@@ -23,6 +23,7 @@ const initialState:ChatState = {
         contactImage:"",
         contactID:"",
         lastMessage:{
+            sender:"",
             text:"",
             sendedAt:""
         }
@@ -42,15 +43,50 @@ export const ChatProvider = ({children}:Props) => {
             .catch(err => console.log(err))       
     }
 
-    const sendMessage = ({sender, receiver, text, conversationId}:Omit<SocketMessage, "createdAt" | "_id">):void => {
-        socket.current?.emit("send-message", {sender, receiver, text, conversationId})
-        setState(prev => ({...prev, currentMessage:{conversationId, sender, receiver, text}}))
+    const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
+        socket.current?.emit("send-message", message)
+        const time = new Date().toLocaleTimeString().slice(0,5)
+        setState(prev => ({
+            ...prev,
+            currentMessage:message,
+            contactsData:prev.contactsData.map(contact => {
+                if(contact.id === message.conversationId) {
+                    return {
+                        ...contact,
+                        lastMessage:{
+                            sender:message.sender,
+                            text:message.text,
+                            sendedAt:time
+                        }
+                    }
+                }
+                return contact
+            })
+
+     
+        }))
     }
 
     const getMessage = () => {
-        socket.current?.on("get-message", message => {
-            setState(prev => ({...prev, currentMessage:message}))
-            console.log(message, "from provider")
+        socket.current?.on("get-message", ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
+            const time = new Date().toLocaleTimeString().slice(0,5)
+            setState(prev => ({
+                ...prev, 
+                currentMessage:message,
+                contactsData:prev.contactsData.map(contact => {
+                if(contact.id === message.conversationId) {
+                    return {
+                        ...contact,
+                        lastMessage:{
+                            sender:message.sender,
+                            text:message.text,
+                            sendedAt:time
+                        }
+                    }
+                }
+                return contact
+            })
+            }))
         })
     }
     

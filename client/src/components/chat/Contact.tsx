@@ -1,14 +1,16 @@
 import { useContext } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
+import { memo } from "react"
 
 interface ContactProps {
     username: string,
     img: string,
     online?: boolean,
-    lastMessage?: string
+    lastMessage?: string,
+    lastMessageTime?:string
 }
 
-const Contact = ({username, online, img, lastMessage }:ContactProps) => {
+const Contact = ({username, online, img, lastMessage, lastMessageTime }:ContactProps) => {
     
     const { state } = useContext(ChatContext)
     
@@ -21,11 +23,14 @@ const Contact = ({username, online, img, lastMessage }:ContactProps) => {
                 </div>
                 <div className="w-[calc(80%)] max-w-[20rem] gap-[0.5]">
                     <h4 className="text-slate-800/80 font-bold text-start">{ username }</h4>
-                    <p className=" text-xs font-medium text-slate-800/40 text-start truncate">{lastMessage}</p>
+                    <div className="flex justify-between text-xs font-medium text-slate-800/40 text-start truncate">
+                        <p className=" ">{lastMessage}</p>
+                        <span className="">{ lastMessageTime }</span>
+                    </div>
                 </div>
             </div>
         </>
      );
 }
  
-export default Contact;
+export default memo(Contact);

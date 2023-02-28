@@ -16,14 +16,14 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const time = new Date(sendedAt)
     const localTime = time.toTimeString().slice(0,5)
-    console.log(state.currentConversation)
+    console.log(state.currentMessage.text)
     return ( 
         <>
             {
                 own ? 
                 <div className=" w-full flex flex-col items-end py-4 pr-4 lg:pr-10">
                     <div className="rounded-full p-2 bg-primary -mb-16">
-                        <img src={user.profileImage} alt={from} className="w-10 lg:w-12" />
+                        <img src={ user.profileImage } alt={ from } className="w-10 lg:w-12" />
                     </div>
                     <div className="flex flex-col items-end mr-20">
                         <div className="flex gap-x-4 items-center text-slate-800/60">
