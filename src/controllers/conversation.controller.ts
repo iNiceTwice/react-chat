@@ -34,15 +34,17 @@ export const getConversation = async (req: Request, res:Response) => {
         const contactID = conversation.members.find((conversation:Object) => conversation !== userID) as string
         const contact = await USERS.find({publicId:contactID})
         const currentMessage = await MESSAGES.findOne({conversationId:conversation._id}).sort({ createdAt: -1 })
+        
         conversationData.push({
-            id:conversation._id.toString(),    
+            id:conversation._id.toString(),
+            isOnline:false,    
             contactID:contact[0].publicId,
             contactImage:contact[0].profileImage,
             contactName:contact[0].username,
             lastMessage:{
                 sender:currentMessage?.sender,
                 text:currentMessage?.text,
-                sendedAt:currentMessage?.createdAt.toLocaleTimeString().slice(0,5)
+                sendedAt:currentMessage?.createdAt
             }
         })
     })).then(() => {
@@ -50,3 +52,5 @@ export const getConversation = async (req: Request, res:Response) => {
     }).catch(err => res.status(500).json({message:err}))
     
 }
+
+//.toLocaleTimeString().slice(0,5)

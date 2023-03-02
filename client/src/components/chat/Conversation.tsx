@@ -11,7 +11,6 @@ const Conversation = () => {
     const [ messages, setMessages ] = useState<MessageFormat[]>()
     const [ newMessages, setNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
     const [ currentNewMessages, setCurrentNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
-    const localTime = new Date().toJSON()
     const scrollRef = useRef<HTMLDivElement>(null)
 
     const getMessages = () => {
@@ -40,7 +39,6 @@ const Conversation = () => {
     }, [messages, newMessages]);
 
     
-    console.log(currentNewMessages)
     return ( 
         <div className="flex flex-col w-full h-full overflow-y-auto">
             {
@@ -51,7 +49,7 @@ const Conversation = () => {
                             from={message.sender} 
                             text={message.text} 
                             own={user.name === message.sender}
-                            sendedAt={message.createdAt}
+                            sendedAt={new Date(message.createdAt).toTimeString().slice(0,5)}
                         />
                     </div> 
                 ))
@@ -65,7 +63,7 @@ const Conversation = () => {
                                 from={message.sender} 
                                 text={message.text} 
                                 own={user.name === message.sender}
-                                sendedAt={localTime}
+                                sendedAt={new Date().toTimeString().slice(0,5)}
                             />
                         </div> 
                     )

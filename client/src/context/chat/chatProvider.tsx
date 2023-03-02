@@ -19,13 +19,14 @@ const initialState:ChatState = {
     },
     currentConversation:{
         id:"",
+        isOnline:false,
         contactName:"",
         contactImage:"",
         contactID:"",
         lastMessage:{
             sender:"",
             text:"",
-            sendedAt:""
+            sendedAt:new Date()
         }
     }
 }
@@ -39,13 +40,31 @@ export const ChatProvider = ({children}:Props) => {
 
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
-            .then(res => setState(prev => ({...prev, contactsData:res.data, currentConversation:res.data[0]})))        
+            .then(res => {
+                console.log(res.data)
+                socket.current?.emit("add-user", { 
+                    userID:user.publicId,
+                    contacts:res.data
+                })              
+                socket.current?.on("send-connected", onlineContacts => {
+                    let connected = [...res.data]
+                    connected.map((contact, i) => {
+                        onlineContacts.map((onlineContact:{userID:string, socketID:string}) => {
+                            if(onlineContact.userID === contact.contactID){
+                                connected[i].isOnline = true
+                            }
+                        })
+                    })
+                    setState(prev => ({...prev, contactsData:connected, currentConversation:res.data[0]}))
+                })                
+
+            })        
             .catch(err => console.log(err))       
     }
 
-    const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
+    const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
         socket.current?.emit("send-message", message)
-        const time = new Date().toLocaleTimeString().slice(0,5)
+
         setState(prev => ({
             ...prev,
             currentMessage:message,
@@ -56,20 +75,18 @@ export const ChatProvider = ({children}:Props) => {
                         lastMessage:{
                             sender:message.sender,
                             text:message.text,
-                            sendedAt:time
+                            sendedAt: new Date()
                         }
                     }
                 }
                 return contact
             })
-
-     
         }))
     }
 
     const getMessage = () => {
         socket.current?.on("get-message", ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
-            const time = new Date().toLocaleTimeString().slice(0,5)
+
             setState(prev => ({
                 ...prev, 
                 currentMessage:message,
@@ -80,25 +97,20 @@ export const ChatProvider = ({children}:Props) => {
                         lastMessage:{
                             sender:message.sender,
                             text:message.text,
-                            sendedAt:time
+                            sendedAt: new Date()
                         }
                     }
                 }
-                return contact
-            })
+                    return contact
+                })
             }))
         })
     }
-    
-    useEffect(() => {
-        getContacts()
-    }, []);
-    
+
     useEffect(() => {
         socket.current = io("http://localhost:3001")
-        socket.current.emit("add-user", user.publicId)
+        getContacts()
     }, [socket]);    
-    
     
     useEffect(() => {
         getMessage()

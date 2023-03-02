@@ -9,7 +9,7 @@ import messagesRoutes from "./routes/messages.routes"
 import authRoutes from "./routes/auth.routes"
 import conversationRoutes from "./routes/conversation.routes"
 import cookieParser from "cookie-parser"
-import { SocketUser } from "./types";
+import { ContactData, SocketUser } from "./types";
 
 dotenv.config()
 const app = express();
@@ -62,10 +62,16 @@ const getUser = (userID:string):SocketUser => {
 
 io.on("connection", socket => {
 
-  socket.on("add-user", (userID) => {
-    addUser(userID, socket.id)
-    //console.log("hola", users)
-    //console.log(users)
+  socket.on("add-user", (user) => {
+    addUser(user.userID, socket.id)
+    if(user.contacts){
+      const connectedContacts = users.filter((obj:SocketUser) => user.contacts.some((o:ContactData) => obj.userID === o.contactID))
+      console.log(connectedContacts, user.userID)
+      io.to(socket.id).emit("send-connected", connectedContacts)     
+      connectedContacts.forEach((contact:SocketUser) => {
+        io.to(contact.socketID).emit("send-connected", [{socketID:socket.id, userID:user.userID}] )     
+      });
+    }
   })
 
   socket.on("send-message", ({sender, receiver, text, conversationId }) => {
@@ -85,6 +91,7 @@ io.on("connection", socket => {
     removeUser(socket.id)
     console.log(`Usuario ${socket.id} desconctado`)
   })
+
   console.log(`Usuario ${socket.id} conectado` )
   
 })

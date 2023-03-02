@@ -14,7 +14,12 @@ const Heading = () => {
             </div>
             <div className="flex flex-col">
                 <h2 className="text-2xl font-semibold text-slate-800/80">{ state.currentConversation?.contactName }</h2>
-                <p className="text-green-500 font-semibold text-sm">Online</p>
+                {
+                    state.currentConversation?.isOnline ?
+                    <p className="text-green-500 font-semibold text-sm">Online</p>
+                    :
+                    <p className="text-slate-400 font-semibold text-sm">Offline</p>
+                }   
             </div>
         </div>
      );

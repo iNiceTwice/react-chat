@@ -17,13 +17,14 @@ export interface User {
 
 export interface ContactData {
     id:Types.ObjectId,
+    isOnline:boolean,
     contactName:string,
     contactImage:string,
     contactID:string,
     lastMessage?:{
         sender:string
         text:string,
-        sendedAt:string
+        sendedAt:Date
     }
 }
 
@@ -32,13 +33,9 @@ export interface MessageFormat {
   conversationId:string,
   sender:string,
   text:string,
-  createdAt:string
+  createdAt:Date
 }
 
 interface SocketMessage extends MessageFormat {
     receiver:string,
-}
-
-export declare global {
-  const Date: new () => Date
 }

@@ -32,3 +32,15 @@ export interface MessageDocument {
   createdAt: Date;
   updateAt: Date;
 }
+
+export interface ContactData {
+    id:Types.ObjectId,
+    contactName:string,
+    contactImage:string,
+    contactID:string,
+    lastMessage?:{
+        sender:string
+        text:string,
+        sendedAt:Date
+    }
+}

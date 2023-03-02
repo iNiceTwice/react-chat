@@ -14,9 +14,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
 
     const { state } = useContext(ChatContext)
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
-    const time = new Date(sendedAt)
-    const localTime = time.toTimeString().slice(0,5)
-    console.log(state.currentMessage.text)
+
     return ( 
         <>
             {
@@ -27,7 +25,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                     </div>
                     <div className="flex flex-col items-end mr-20">
                         <div className="flex gap-x-4 items-center text-slate-800/60">
-                            <p className="text-xs">{ localTime }</p>
+                            <p className="text-xs">{ sendedAt }</p>
                             <h2 className="font-semibold text-lg text-slate-800/90">You</h2>
                         </div>
                         <div className="mt-2 flex gap-1 w-full">
@@ -46,7 +44,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                     <div className="ml-20">
                         <div className="flex gap-x-4 items-center text-slate-800/60">
                             <h2 className="font-semibold text-slate-800/90 text-lg">{from}</h2>
-                            <p className="text-xs">{ localTime }</p>
+                            <p className="text-xs">{ sendedAt }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
                             <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[18rem] lg:max-w-xl break-words">

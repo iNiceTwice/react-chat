@@ -32,10 +32,11 @@ const ContactList = () => {
                     state.contactsData?.map((contact)=>(
                         <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
                             <Contact 
-                                username={contact.contactName} 
+                                username={contact.contactName}
+                                isOnline={contact.isOnline} 
                                 img={contact.contactImage} 
                                 lastMessage={contact.lastMessage?.sender === user.name ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
-                                lastMessageTime={contact.lastMessage?.sendedAt} 
+                                lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
                             />                     
                         </button>
                     ))
@@ -44,9 +45,10 @@ const ContactList = () => {
                         <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
                             <Contact 
                                 username={contact.contactName} 
+                                isOnline={contact.isOnline} 
                                 img={contact.contactImage} 
                                 lastMessage={contact.contactID === user.publicId ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
-                                lastMessageTime={contact.lastMessage?.sendedAt}
+                                lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
                             />                     
                         </button>
                     ))
