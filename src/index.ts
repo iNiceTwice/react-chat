@@ -60,15 +60,21 @@ const getUser = (userID:string):SocketUser => {
   return users.find((user) => user.userID === userID)!;
 }
 
+const getConnectedContacts = (contacts:ContactData[]) => {
+
+  const connectedContacts = users.filter((obj:SocketUser) => contacts.some((o:ContactData) => obj.userID === o.contactID))
+  
+  return connectedContacts
+}
+
 io.on("connection", socket => {
 
   socket.on("add-user", (user) => {
     addUser(user.userID, socket.id)
     if(user.contacts){
-      const connectedContacts = users.filter((obj:SocketUser) => user.contacts.some((o:ContactData) => obj.userID === o.contactID))
-      console.log(connectedContacts, user.userID)
-      io.to(socket.id).emit("send-connected", connectedContacts)     
-      connectedContacts.forEach((contact:SocketUser) => {
+      const connected = getConnectedContacts(user.contacts)   
+      io.to(socket.id).emit("send-connected", connected)  
+      connected.forEach((contact:SocketUser) => {
         io.to(contact.socketID).emit("send-connected", [{socketID:socket.id, userID:user.userID}] )     
       });
     }
@@ -88,8 +94,11 @@ io.on("connection", socket => {
   })
 
   socket.on("disconnect", () => {
+    const userDisconnected = users.find(user => user.socketID === socket.id)
+    io.emit("send-disconnected", userDisconnected)
+    console.log(userDisconnected)
     removeUser(socket.id)
-    console.log(`Usuario ${socket.id} desconctado`)
+    console.log(`Usuario ${socket.id} desconctado`) 
   })
 
   console.log(`Usuario ${socket.id} conectado` )

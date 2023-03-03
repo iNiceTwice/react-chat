@@ -1,6 +1,4 @@
 import { BsThreeDotsVertical } from "react-icons/bs"
-import { ChatContext } from "../../context/chat/chatContext"
-import { useContext } from "react"
 
 interface Props {
     own: boolean,
@@ -12,7 +10,6 @@ interface Props {
 
 const Message = ({ own, from, text, image, sendedAt }:Props) => {
 
-    const { state } = useContext(ChatContext)
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
 
     return ( 
@@ -31,7 +28,7 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                         <div className="mt-2 flex gap-1 w-full">
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>
                             <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[18rem] lg:max-w-xl break-words h-fit">
-                                {text}
+                                { text }
                             </div>
                         </div>
                     </div>
@@ -39,16 +36,16 @@ const Message = ({ own, from, text, image, sendedAt }:Props) => {
                 :
                 <div className="w-full flex flex-col items-start py-4 pl-4">
                     <div className="rounded-full p-2 bg-primary -mb-16">
-                        <img src={image} alt={from} className="w-10 lg:w-12" />
+                        <img src={ image } alt={ from } className="w-10 lg:w-12" />
                     </div>
                     <div className="ml-20">
                         <div className="flex gap-x-4 items-center text-slate-800/60">
-                            <h2 className="font-semibold text-slate-800/90 text-lg">{from}</h2>
+                            <h2 className="font-semibold text-slate-800/90 text-lg">{ from }</h2>
                             <p className="text-xs">{ sendedAt }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
                             <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[18rem] lg:max-w-xl break-words">
-                                {text}
+                                { text }
                             </div>
                             <button className="text-slate-400 hover:scale-110"><BsThreeDotsVertical size={16}/></button>
                         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { ChatContext } from "./chatContext"
-import { ChatState, SocketMessage } from "../../types";
+import { ChatState, ContactData, SocketMessage } from "../../types";
 import { io, Socket } from "socket.io-client"
 import axios from "../../api/axios.config"
 
@@ -41,7 +41,6 @@ export const ChatProvider = ({children}:Props) => {
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
             .then(res => {
-                console.log(res.data)
                 socket.current?.emit("add-user", { 
                     userID:user.publicId,
                     contacts:res.data
@@ -56,8 +55,14 @@ export const ChatProvider = ({children}:Props) => {
                         })
                     })
                     setState(prev => ({...prev, contactsData:connected, currentConversation:res.data[0]}))
-                })                
+                })
+                socket.current?.on("send-disconnected", (user) => {
+                    const contactIndex = res.data.findIndex((contact:ContactData) => contact.contactID === user.userID)
+                    let newContactsData = [...res.data]
+                    newContactsData[contactIndex].isOnline = false
+                    setState(prev => ({...prev, contactsData:newContactsData}))
 
+                })                                                
             })        
             .catch(err => console.log(err))       
     }
@@ -106,6 +111,7 @@ export const ChatProvider = ({children}:Props) => {
             }))
         })
     }
+
 
     useEffect(() => {
         socket.current = io("http://localhost:3001")
