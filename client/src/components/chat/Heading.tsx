@@ -21,7 +21,7 @@ const Heading = () => {
                     <p className="text-slate-400 font-semibold text-sm">Offline</p>
                 }   
             </div>
-        </div>
+        </button>
      );
 }
  

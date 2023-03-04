@@ -9,7 +9,7 @@ const SideDisplay = () => {
     const { state } = useContext(ChatContext)
 
     return ( 
-        <div className="bg-secondary border-r h-full w-[30rem] sm:block hidden">
+        <div className="bg-secondary border-r-2 border-slate-100 h-full md:min-w-[25rem] sm:block hidden">
             { state.sideContent === "contacts" && <ContactList/> }
             { state.sideContent === "addContact" && <AddContact/> }
             { state.sideContent === "settings" && <Settings/> }

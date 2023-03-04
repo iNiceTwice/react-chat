@@ -31,6 +31,22 @@ body {
   background-size: 80px 80px;
   background-position: 0 0, 40px 40px;
 }
-.sss:first-child{
-  margin-top:auto
+.styled-scrollbar{
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color:  #276fff;
+}
+/* Chrome, Edge, and Safari */
+.styled-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.styled-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 100%;
+}
+
+.styled-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #276fff;
+  border-radius: 20px;
 }

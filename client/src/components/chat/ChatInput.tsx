@@ -32,7 +32,7 @@ const ChatInput = () => {
     }
 
     return ( 
-        <form onSubmit={ handleSubmit } className="mt-4 flex justify-center w-full py-4 bg-secondary border-t">
+        <form onSubmit={ handleSubmit } className="flex justify-center w-full py-4 bg-secondary border-t-2 border-slate-100">
             <input
                 value={message}
                 onChange={ handleChange }
