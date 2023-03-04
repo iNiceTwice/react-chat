@@ -10,6 +10,7 @@ interface Props {
 
 const initialState:ChatState = {
     sideContent:"contacts",
+    sideContactData:false,
     contactsData:[],
     currentMessage:{
         conversationId:"",

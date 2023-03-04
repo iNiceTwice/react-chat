@@ -4,6 +4,7 @@ import ChatInput from '../components/chat/ChatInput'
 import SideMenu from '../components/chat/SideMenu'
 import SideDisplay from '../components/chat/SideDisplay'
 import { ChatProvider } from '../context/chat/chatProvider'
+import ContactProfile from '../components/chat/ContactProfile'
 
 const Chat = () => {
 
@@ -17,6 +18,9 @@ const Chat = () => {
               <Heading/>
               <Conversation/>
               <ChatInput/>
+            </div>
+            <div className="flex">
+              <ContactProfile/>
             </div>      
           </div>
       </div>
