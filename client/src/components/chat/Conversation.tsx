@@ -40,25 +40,35 @@ const Conversation = () => {
 
     
     return ( 
-        <div className="flex flex-col w-full h-full overflow-y-auto styled-scrollbar">
+        <div className="flex flex-col w-full pb-2 h-full overflow-y-auto styled-scrollbar">
             {
-                messages?.map((message) => (
-                    <div ref={scrollRef} className="w-full first:mt-auto" key={message._id}>
-                        <Message 
-                            image={state.currentConversation.contactImage} 
-                            from={message.sender} 
-                            text={message.text} 
-                            own={user.name === message.sender}
-                            sendedAt={new Date(message.createdAt).toTimeString().slice(0,5)}
-                        />
-                    </div> 
-                ))
+                messages?.map((message, index) => {
+
+                    const previousMessage = messages[index - 1]
+
+                    return (
+                        <div ref={scrollRef} className="w-full first:mt-auto" key={message._id}>
+                            <Message
+                                onlyText={previousMessage?.sender === message.sender} 
+                                image={state.currentConversation.contactImage} 
+                                from={message.sender} 
+                                text={message.text} 
+                                own={user.name === message.sender}
+                                sendedAt={new Date(message.createdAt).toTimeString().slice(0,5)}
+                            />
+                        </div> 
+                    )
+                })
             }
             {
                 currentNewMessages?.map((message, index) => {
+                    
+                    const previousMessage = currentNewMessages[index - 1]        
+
                     return (
                         <div ref={scrollRef} className="w-full first:mt-auto" key={index}>
                             <Message 
+                                onlyText={previousMessage?.sender === message.sender}
                                 image={state.currentConversation.contactImage} 
                                 from={message.sender} 
                                 text={message.text} 
