@@ -36,7 +36,7 @@ const OwnMessage = ({ from, text, sendedAt, onlyText }:Omit<Props, "image" | "ow
                             <p className="text-xs">{ sendedAt }</p>
                             <h2 className="font-semibold text-lg text-slate-800/90">You</h2>
                         </div>
-                        <div className="mt-2 flex gap-1 w-full">
+                        <div className="mt-2 flex gap-1 justify-end w-full">
                             <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[18rem] lg:max-w-xl break-words h-fit">
                                 { text }
                             </div>
