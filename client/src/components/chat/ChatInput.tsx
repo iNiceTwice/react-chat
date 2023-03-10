@@ -10,10 +10,13 @@ const ChatInput = () => {
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        
+        if(message.trim() === "") return
+        
         axios.post("/message", {
             conversationId: state.currentConversation.id,
             sender:user.name,
-            text:message    
+            text:message.trim()  
         })
             .then(() => {
                 setMessage("")
@@ -21,7 +24,7 @@ const ChatInput = () => {
                     conversationId:state.currentConversation.id,
                     sender:user.name,
                     receiver:state.currentConversation.contactID,
-                    text:message
+                    text:message.trim()
                 })
             })
             .catch(err => console.log(err))   
