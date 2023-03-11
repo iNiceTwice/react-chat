@@ -26,7 +26,7 @@ export interface ContactData {
     lastMessage?:{
         sender:string,
         text:string,
-        sendedAt:Date
+        sendedAt:string
     }
 }
 
@@ -35,7 +35,7 @@ export interface MessageFormat {
   conversationId:string,
   sender:string,
   text:string,
-  createdAt:Date
+  createdAt:string
 }
 
 interface SocketMessage extends MessageFormat {

@@ -4,6 +4,19 @@ import USERS from "../models/users.model"
 import MESSAGES from "../models/message.model"
 import { ConversationDocument } from "../types";
 
+interface ConversationFormat {
+    id:string,
+    isOnline:boolean,    
+    contactID:string,
+    contactImage:string,
+    contactName:string,
+    unreadMessages:number,
+    lastMessage:{
+        sender?:string,
+        text?:string,
+        sendedAt?:Date
+    }    
+}
 
 
 export const addConversation = async (req: Request, res:Response):Promise<Object> => {
@@ -28,7 +41,7 @@ export const addConversation = async (req: Request, res:Response):Promise<Object
 export const getConversation = async (req: Request, res:Response) => {
     const { userID } = req.query
     const conversations = await CONVERSATIONS.find({members:userID})
-    let conversationData:Object[] = []
+    let conversationData:ConversationFormat[] = []
     
     Promise.all(conversations.map(async (conversation:ConversationDocument)=>{
         const contactID = conversation.members.find((conversation:Object) => conversation !== userID) as string
@@ -54,5 +67,3 @@ export const getConversation = async (req: Request, res:Response) => {
     }).catch(err => res.status(500).json({message:err}))
     
 }
-
-//.toLocaleTimeString().slice(0,5)

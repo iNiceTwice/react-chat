@@ -36,7 +36,7 @@ const ContactList = () => {
             })
         }))
     }
-    console.log(state.contactsData)
+    
     return ( 
         <>
             <div className="w-full p-5">

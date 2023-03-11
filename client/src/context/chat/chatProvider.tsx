@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { ChatContext } from "./chatContext"
 import { ChatState, ContactData, SocketMessage } from "../../types";
 import { io, Socket } from "socket.io-client"
@@ -28,7 +28,7 @@ const initialState:ChatState = {
         lastMessage:{
             sender:"",
             text:"",
-            sendedAt:new Date()
+            sendedAt:new Date().toString()
         }
     }
 }
@@ -56,7 +56,12 @@ export const ChatProvider = ({children}:Props) => {
                             }
                         })
                     })
-                    setState(prev => ({...prev, contactsData:connected, currentConversation:res.data[0]}))
+                    
+                    setState(prev => ({
+                        ...prev,
+                        contactsData:sortByDate(connected),
+                        currentConversation:sortByDate(connected)[0]
+                    }))
                 })
                 socket.current?.on("send-disconnected", (user) => {
                     const contactIndex = res.data.findIndex((contact:ContactData) => contact.contactID === user.userID)
@@ -72,23 +77,27 @@ export const ChatProvider = ({children}:Props) => {
     const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
         socket.current?.emit("send-message", message)
 
-        setState(prev => ({
-            ...prev,
-            currentMessage:message,
-            contactsData:prev.contactsData.map(contact => {
+        setState(prev => {
+            const updatedContactsData = prev.contactsData.map(contact => {
                 if(contact.id === message.conversationId) {
                     return {
                         ...contact,
                         lastMessage:{
                             sender:message.sender,
                             text:message.text,
-                            sendedAt: new Date()
+                            sendedAt: new Date().toString()
                         }
                     }
                 }
                 return contact
             })
-        }))
+            
+            return {
+                ...prev,
+                currentMessage:message,
+                contactsData:sortByDate(updatedContactsData)
+            }
+        })
     }
     
 
@@ -102,27 +111,38 @@ export const ChatProvider = ({children}:Props) => {
                 })
             }
 
-            setState(prev => ({
-                ...prev, 
-                currentMessage:message,
-                contactsData:prev.contactsData.map((contact, i) => {
-                if(contact.id === message.conversationId) {
-                    return {
-                        ...contact,
-                        unreadMessages:message.conversationId !== prev.currentConversation?.id ? contact.unreadMessages + 1 : 0,
-                        lastMessage:{
-                            sender:message.sender,
-                            text:message.text,
-                            sendedAt: new Date()
+            setState(prev => {
+                const updatedContactsData = prev.contactsData.map((contact, i) => {
+                    if(contact.id === message.conversationId) {
+                        return {
+                            ...contact,
+                            unreadMessages:message.conversationId !== prev.currentConversation?.id ? contact.unreadMessages + 1 : 0,
+                            lastMessage:{
+                                sender:message.sender,
+                                text:message.text,
+                                sendedAt: new Date().toString()
+                            }
                         }
                     }
-                }
-                return contact
+                    return contact
                 })
-            }))
+
+                return{
+                    ...prev, 
+                    currentMessage:message,
+                    contactsData:sortByDate(updatedContactsData)
+                }
+            })
         })
     }
-
+    
+    const sortByDate = (array:ContactData[]) => {
+        return array.sort((a, b) => {
+            const dateA = a.lastMessage ? Date.parse(a.lastMessage.sendedAt) : undefined;
+            const dateB = b.lastMessage ? Date.parse(b.lastMessage.sendedAt) : undefined;
+            return (dateB ?? 0) - (dateA ?? 0);
+        })
+    }
 
     useEffect(() => {
         socket.current = io("http://localhost:3001")
