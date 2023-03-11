@@ -29,6 +29,7 @@ export interface MessageDocument {
   conversationId:String,
   sender:string,
   text:string,
+  readed:boolean,
   createdAt: Date;
   updateAt: Date;
 }

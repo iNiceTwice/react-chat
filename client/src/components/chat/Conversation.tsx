@@ -18,6 +18,7 @@ const Conversation = () => {
             .then(res => setMessages(res.data))
             .catch(err => console.log(err))    
     }
+    
 
     useEffect(() => {
         setNewMessages(prev => [...newMessages.filter(message => message.conversationId !== state.currentConversation.id)])

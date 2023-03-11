@@ -34,13 +34,15 @@ export const getConversation = async (req: Request, res:Response) => {
         const contactID = conversation.members.find((conversation:Object) => conversation !== userID) as string
         const contact = await USERS.find({publicId:contactID})
         const currentMessage = await MESSAGES.findOne({conversationId:conversation._id}).sort({ createdAt: -1 })
-        
+        const unreadMessages = await MESSAGES.find({conversationId:conversation._id, readed:false, sender:contact[0].username})
+
         conversationData.push({
             id:conversation._id.toString(),
             isOnline:false,    
             contactID:contact[0].publicId,
             contactImage:contact[0].profileImage,
             contactName:contact[0].username,
+            unreadMessages:unreadMessages.length,
             lastMessage:{
                 sender:currentMessage?.sender,
                 text:currentMessage?.text,

@@ -87,8 +87,6 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
 
 const Message = ({ own, from, text, image, sendedAt, onlyText }:Props) => {
 
-    
-
     return ( 
         <>
             {

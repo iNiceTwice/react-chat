@@ -4,11 +4,12 @@ interface ContactProps {
     username: string,
     img: string,
     isOnline: boolean,
+    unreadMessages:number,
     lastMessage?: string,
     lastMessageTime?:string
 }
 
-const Contact = ({username, isOnline, img, lastMessage, lastMessageTime }:ContactProps) => {
+const Contact = ({username, isOnline, img, lastMessage, lastMessageTime, unreadMessages }:ContactProps) => {
     
     return ( 
         <>
@@ -23,7 +24,13 @@ const Contact = ({username, isOnline, img, lastMessage, lastMessageTime }:Contac
                     }
                 </div>
                 <div className="w-[calc(80%)] max-w-[20rem] gap-[0.5]">
-                    <h4 className="text-slate-800/80 font-bold text-start">{ username }</h4>
+                    <div className="flex justify-between w-full h-full">
+                        <h4 className="text-slate-800/80 font-bold text-start">{ username }</h4>
+                        {
+                            unreadMessages > 0 &&
+                            <span className="p-[0.56rem] h-1 w-1 flex items-center justify-center shadow-sm bg-red-600 rounded-full text-white text-xs">{ unreadMessages }</span>
+                        }
+                    </div>
                     {
                         lastMessage &&
                         <div className="flex justify-between text-xs font-medium text-slate-800/40 text-start truncate">

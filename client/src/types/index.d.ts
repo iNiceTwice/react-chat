@@ -6,7 +6,7 @@ export interface ChatState {
     sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings",
     sideContactData:boolean,
     contactsData: ContactData[],
-    currentMessage:Omit<SocketMessage, "createdAt" | "_id">
+    currentMessage:Omit<SocketMessage, "createdAt" | "_id">,
     currentConversation:ContactData
 }
 
@@ -22,8 +22,9 @@ export interface ContactData {
     contactName:string,
     contactImage:string,
     contactID:string,
+    unreadMessages:number,
     lastMessage?:{
-        sender:string
+        sender:string,
         text:string,
         sendedAt:Date
     }

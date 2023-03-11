@@ -8,7 +8,7 @@ router.post("/conversation",verifyToken , addConversation)
 
 router.get("/conversation",verifyToken , getConversation)
 
-router.get("/conversations", async (req, res) => {
+router.get("/conversations", async (req, res) => { //DELETE
     const conversations = await CONVERSATIONS.find()
     res.send(conversations)
 })

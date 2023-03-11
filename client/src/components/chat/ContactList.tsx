@@ -2,6 +2,7 @@ import Contact from "./Contact";
 import { useState, useContext } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
 import { ContactData } from "../../types";
+import axios from "../../api/axios.config"
 
 const ContactList = () => {
 
@@ -15,9 +16,27 @@ const ContactList = () => {
     }
     
     const setCurrentConversation = (contact:ContactData) => {
-        setState(prev => ({...prev, currentConversation:contact}))
+        if(contact.lastMessage?.sendedAt){
+            axios.put("/messages",{
+                conversationId:contact.id,
+                sender:contact.lastMessage?.sender,
+            })
+        }
+        setState(prev => ({
+            ...prev, 
+            currentConversation:contact,
+            contactsData: prev.contactsData.map(c => {
+                if(c.contactID === contact.contactID){
+                    return {
+                        ...c,
+                        unreadMessages:0
+                    }
+                }
+                return c
+            })
+        }))
     }
-
+    console.log(state.contactsData)
     return ( 
         <>
             <div className="w-full p-5">
@@ -34,7 +53,8 @@ const ContactList = () => {
                             <Contact 
                                 username={contact.contactName}
                                 isOnline={contact.isOnline} 
-                                img={contact.contactImage} 
+                                img={contact.contactImage}
+                                unreadMessages={contact.unreadMessages} 
                                 lastMessage={contact.lastMessage?.sender === user.name ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
                                 lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
                             />                     
@@ -47,6 +67,7 @@ const ContactList = () => {
                                 username={contact.contactName} 
                                 isOnline={contact.isOnline} 
                                 img={contact.contactImage} 
+                                unreadMessages={contact.unreadMessages} 
                                 lastMessage={contact.contactID === user.publicId ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
                                 lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
                             />                     

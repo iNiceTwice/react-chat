@@ -24,6 +24,7 @@ const initialState:ChatState = {
         contactName:"",
         contactImage:"",
         contactID:"",
+        unreadMessages:0,
         lastMessage:{
             sender:"",
             text:"",
@@ -89,17 +90,26 @@ export const ChatProvider = ({children}:Props) => {
             })
         }))
     }
+    
 
     const getMessage = () => {
         socket.current?.on("get-message", ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
 
+            if(message.conversationId === state.currentConversation?.id){
+                axios.put("/messages",{
+                    conversationId:message.conversationId,
+                    sender:message.sender,
+                })
+            }
+
             setState(prev => ({
                 ...prev, 
                 currentMessage:message,
-                contactsData:prev.contactsData.map(contact => {
+                contactsData:prev.contactsData.map((contact, i) => {
                 if(contact.id === message.conversationId) {
                     return {
                         ...contact,
+                        unreadMessages:message.conversationId !== prev.currentConversation?.id ? contact.unreadMessages + 1 : 0,
                         lastMessage:{
                             sender:message.sender,
                             text:message.text,
@@ -107,7 +117,7 @@ export const ChatProvider = ({children}:Props) => {
                         }
                     }
                 }
-                    return contact
+                return contact
                 })
             }))
         })
@@ -117,11 +127,8 @@ export const ChatProvider = ({children}:Props) => {
     useEffect(() => {
         socket.current = io("http://localhost:3001")
         getContacts()
-    }, [socket]);    
-    
-    useEffect(() => {
         getMessage()
-    }, [state.currentMessage, state.currentConversation]);
+    }, []);    //antes estaba state.currentConversation y currentMessage verif si hay errores
 
     return (
         <ChatContext.Provider
