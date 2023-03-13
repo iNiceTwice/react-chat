@@ -13,7 +13,7 @@ interface Error {
 }
 
 const registerSchema = yup.object().shape({
-    username: yup.string().min(4,"At least 4 characters.").max(15,"Max 15 characters.").required("This field is required"),
+    username: yup.string().min(4,"At least 4 characters.").max(15,"Max 15 characters.").matches(/^\S*$/, "Word spacing is not allowed").required("This field is required"),
     email:yup.string().email("Invalid email").required("This field is required"),
     password: yup.string().min(8,"At least 8 characters.").max(15,"Max 15 characters.").required("This field is required"),
 })
