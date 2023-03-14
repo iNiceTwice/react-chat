@@ -2,6 +2,7 @@ import Contact from "./Contact";
 import { useState, useContext } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
 import { ContactData } from "../../types";
+import ContactSkeleton from "./ContactSkeleton";
 import axios from "../../api/axios.config"
 
 const ContactList = () => {
@@ -47,7 +48,13 @@ const ContactList = () => {
             </div>
             <div className="flex flex-col w-full">
                 {
-                    state.contactsData ? null : <div>SEXOOOOO</div>
+                    state.isLoadingContacts && 
+                    <div className="flex flex-col w-full gap-10 px-4 mt-6">
+                        <ContactSkeleton/>
+                        <ContactSkeleton/>
+                        <ContactSkeleton/>
+                        <ContactSkeleton/>
+                    </div>
                 }
                 {
                     filter === "" ? 
@@ -81,5 +88,7 @@ const ContactList = () => {
         </>
      );
 }
+
+
  
 export default ContactList;

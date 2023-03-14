@@ -72,7 +72,7 @@ const Conversation = () => {
         <div onScroll={handleScroll} ref={containerRef} className="flex flex-col w-full pb-2 h-full overflow-y-auto styled-scrollbar">
             { isLoading && 
                 <>
-                    <div className="w-full flex justify-center py-4">
+                    <div className="w-full h-full flex items-center justify-center py-4">
                         <CircularProgress />
                     </div>
                 </>
