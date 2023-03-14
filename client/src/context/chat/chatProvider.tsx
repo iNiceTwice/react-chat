@@ -11,10 +11,11 @@ interface Props {
 const initialState:ChatState = {
     sideContent:"contacts",
     sideContactData:false,
+    isLoadingContacts:true,
     contactsData:[],
     currentMessage:{
         conversationId:"",
-        sender:"",
+        sender:"", 
         receiver:"",
         text:""
     },
@@ -56,9 +57,9 @@ export const ChatProvider = ({children}:Props) => {
                             }
                         })
                     })
-                    
                     setState(prev => ({
                         ...prev,
+                        isLoadingContacts:false,
                         contactsData:sortByDate(connected),
                         currentConversation:sortByDate(connected)[0]
                     }))
@@ -67,13 +68,13 @@ export const ChatProvider = ({children}:Props) => {
                     const contactIndex = res.data.findIndex((contact:ContactData) => contact.contactID === user.userID)
                     let newContactsData = [...res.data]
                     newContactsData[contactIndex].isOnline = false
-                    setState(prev => ({...prev, contactsData:newContactsData}))
+                    setState(prev => ({...prev, contactsData:sortByDate(newContactsData)}))
 
                 })                                                
             })        
             .catch(err => console.log(err))       
     }
-
+    console.log(state.currentConversation)
     const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
         socket.current?.emit("send-message", message)
 

@@ -3,52 +3,87 @@ import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { ChatContext } from "../../context/chat/chatContext";
 import { MessageFormat, SocketMessage } from "../../types";
 import Message from "./Message";
+import { CircularProgress } from "@mui/material";
 
 const Conversation = () => {
 
     const user = JSON.parse(localStorage.getItem("chatUser") as string)
     const { state } = useContext(ChatContext)
-    const [ messages, setMessages ] = useState<MessageFormat[]>()
+    const [isLoading, setIsLoading] = useState<Boolean>(true);
+    const [ messages, setMessages ] = useState<MessageFormat[]>([])
     const [ newMessages, setNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
     const [ currentNewMessages, setCurrentNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
-    const scrollRef = useRef<HTMLDivElement>(null)
+    const lastMessageRef = useRef<HTMLDivElement>(null)
+    const firstMessageRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
 
     const getMessages = () => {
         axios.get(`/messages?id=${state.currentConversation.id}`)
-            .then(res => setMessages(res.data))
-            .catch(err => console.log(err))    
+            .then(res => {
+                 setMessages(res.data)
+                 setIsLoading(false)
+            })
+            .catch(err => {
+                setIsLoading(false)
+                console.log(err)
+            })    
     }
     
-
-    useEffect(() => {
-        setNewMessages(prev => [...newMessages.filter(message => message.conversationId !== state.currentConversation.id)])
-        getMessages()
-    }, [state.currentConversation]);
-
-    useEffect(() => {
-        scrollRef.current?.scrollIntoView({behavior:"smooth"});
-    }, [messages, currentNewMessages]);
+    const handleScroll = () => {
+        const olderMessage = messages[0].createdAt
+        const containerPos = containerRef.current?.scrollTop
     
+        if (containerPos === 0 && olderMessage) {
+            setIsLoading(true)
+            axios.get(`/before-messages?id=${state.currentConversation.id}&olderMessage=${olderMessage}`)
+            .then(res => {
+                setMessages(prev => ([...res.data,...prev ]))
+                setIsLoading(false)
+            })
+            .catch(err => console.log(err))
+            firstMessageRef.current?.scrollIntoView()
+        }
+    }
+
+
     useMemo(() => {
         if(state.currentMessage.text !== ""){
             setNewMessages(prev => ([...prev, state.currentMessage]))
         }
-    }, [state.currentMessage]);
-
+    }, [state.currentMessage])
+    
     useMemo(() => {
         setCurrentNewMessages(prev => [...newMessages.filter(message => message.conversationId === state.currentConversation.id)])
-    }, [messages, newMessages]);
-
+    }, [messages, newMessages])
     
+    useEffect(() => {
+        setNewMessages(prev => [...newMessages.filter(message => message.conversationId !== state.currentConversation.id)])
+        getMessages()
+    }, [state.currentConversation])
+    
+    useEffect(() => {
+        lastMessageRef.current?.scrollIntoView()
+    }, [messages])
+    useEffect(() => {
+        lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
+    }, [currentNewMessages])
+
     return ( 
-        <div className="flex flex-col w-full pb-2 h-full overflow-y-auto styled-scrollbar">
+        <div onScroll={handleScroll} ref={containerRef} className="flex flex-col w-full pb-2 h-full overflow-y-auto styled-scrollbar">
+            { isLoading && 
+                <>
+                    <div className="w-full flex justify-center py-4">
+                        <CircularProgress />
+                    </div>
+                </>
+            }
             {
                 messages?.map((message, index) => {
 
                     const previousMessage = messages[index - 1]
 
                     return (
-                        <div ref={scrollRef} className="w-full first:mt-auto" key={message._id}>
+                        <div ref={index === 0 ? firstMessageRef : lastMessageRef} className="w-full first:mt-auto" key={message._id}>
                             <Message
                                 onlyText={previousMessage?.sender === message.sender} 
                                 image={state.currentConversation.contactImage} 
@@ -63,11 +98,11 @@ const Conversation = () => {
             }
             {
                 currentNewMessages?.map((message, index) => {
-                    
-                    const previousMessage = currentNewMessages[index - 1]        
+
+                    const previousMessage = currentNewMessages[index - 1]
 
                     return (
-                        <div ref={scrollRef} className="w-full first:mt-auto" key={index}>
+                        <div ref={lastMessageRef} className="w-full first:mt-auto" key={index}>
                             <Message 
                                 onlyText={previousMessage?.sender === message.sender}
                                 image={state.currentConversation.contactImage} 

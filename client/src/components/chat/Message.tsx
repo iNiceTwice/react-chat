@@ -1,4 +1,5 @@
 import { BsThreeDotsVertical } from "react-icons/bs"
+import { memo } from "react"
 
 interface Props {
     own: boolean,
@@ -111,4 +112,4 @@ const Message = ({ own, from, text, image, sendedAt, onlyText }:Props) => {
      );
 }
  
-export default Message;
+export default memo(Message);

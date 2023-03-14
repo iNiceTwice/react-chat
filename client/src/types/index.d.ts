@@ -5,6 +5,7 @@ export interface HomeState {
 export interface ChatState {
     sideContent: "addContact" | "folders" | "contacts" | "logout" | "settings",
     sideContactData:boolean,
+    isLoadingContacts:boolean,
     contactsData: ContactData[],
     currentMessage:Omit<SocketMessage, "createdAt" | "_id">,
     currentConversation:ContactData

@@ -16,7 +16,7 @@ const ContactList = () => {
     }
     
     const setCurrentConversation = (contact:ContactData) => {
-        if(contact.lastMessage?.sendedAt){
+        if(contact.lastMessage?.sendedAt !== ""){
             axios.put("/messages",{
                 conversationId:contact.id,
                 sender:contact.lastMessage?.sender,
@@ -36,7 +36,7 @@ const ContactList = () => {
             })
         }))
     }
-    
+
     return ( 
         <>
             <div className="w-full p-5">
@@ -46,6 +46,9 @@ const ContactList = () => {
                 <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
             </div>
             <div className="flex flex-col w-full">
+                {
+                    state.contactsData ? null : <div>SEXOOOOO</div>
+                }
                 {
                     filter === "" ? 
                     state.contactsData?.map((contact)=>(
