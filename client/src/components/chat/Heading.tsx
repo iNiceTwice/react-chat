@@ -36,7 +36,7 @@ const Heading = () => {
                                 }   
                             </div>
                         </div>
-                        <div className="flex gap-4 text-slate-600">
+                        <div className="md:flex gap-4 text-slate-600 hidden">
                             <CiVideoOn size={25} />
                             <CiPhone size={25} />
                         </div>        

@@ -69,7 +69,7 @@ const Conversation = () => {
     }, [currentNewMessages])
 
     return ( 
-        <div onScroll={handleScroll} ref={containerRef} className="flex flex-col w-full pb-2 h-full overflow-y-auto styled-scrollbar">
+        <div onScroll={handleScroll} ref={containerRef} className="flex flex-col w-full p-2 h-full overflow-y-auto styled-scrollbar">
             { isLoading && 
                 <>
                     <div className="w-full h-full flex items-center justify-center py-4">
