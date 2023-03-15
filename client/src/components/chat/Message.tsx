@@ -21,7 +21,7 @@ const OwnMessage = ({ from, text, sendedAt, onlyText }:Omit<Props, "image" | "ow
                 <div className="w-full flex flex-col items-end md:pr-4">
                     <div className="flex w-11/12 mr-20">
                         <div className="mt-2 flex justify-end gap-1 w-full">
-                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[15rem] lg:max-w-xl break-words h-fit">
+                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[15rem] lg:max-w-2xl break-words h-fit">
                                 { text }
                             </div>
                         </div>
@@ -38,7 +38,7 @@ const OwnMessage = ({ from, text, sendedAt, onlyText }:Omit<Props, "image" | "ow
                             <h2 className="font-semibold text-lg text-slate-800/90">You</h2>
                         </div>
                         <div className="mt-2 flex gap-1 justify-end w-full">
-                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[12rem] lg:max-w-xl break-words h-fit">
+                            <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[12rem] lg:max-w-2xl break-words h-fit">
                                 { text }
                             </div>
                         </div>
@@ -57,7 +57,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                 <div className="w-full flex flex-col items-start pl-4">
                     <div className="ml-20">
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[18rem] lg:max-w-xl break-words">
+                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[15rem] lg:max-w-2xl break-words">
                                 { text }
                             </div>
                         </div>
@@ -74,7 +74,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                             <p className="text-xs">{ sendedAt }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[18rem] lg:max-w-xl break-words">
+                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[12rem] lg:max-w-2xl break-words">
                                 { text }
                             </div>
                         </div>
