@@ -4,13 +4,19 @@ import Login from "../components/home/Login";
 import { HomeProvider } from "../context/home/homeProvider";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../api/axios.config"
 
 const Home = () => {
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(localStorage.getItem("chatUser")) navigate("/chat")
+        axios.get("/auth")
+            .then(res => {
+                if(localStorage.getItem("chatUser") && res.status === 200) 
+                    navigate("/chat")
+            })
+            .catch(err => console.log(err))
     }, []);
 
     return (

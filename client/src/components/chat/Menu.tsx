@@ -2,7 +2,7 @@ import { IoMenuOutline, IoCloseOutline } from "react-icons/io5"
 import { useContext, useState } from "react"
 import { ChatContext } from "../../context/chat/chatContext";
 import { ChatState } from "../../types";
-import axios from "axios";
+import axios from "../../api/axios.config";
 import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
@@ -16,7 +16,7 @@ const Menu = () => {
     }
 
      const handleLogout = () => {
-        axios.get("/logout", { withCredentials: true })
+        axios.get("/logout")
             .then(() => {
                 navigate("/")
                 localStorage.removeItem("chatUser")

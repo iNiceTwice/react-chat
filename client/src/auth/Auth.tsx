@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
-import axios from "axios"
+import axios from "../api/axios.config"
 
 interface Props {
   children: JSX.Element
@@ -11,7 +11,7 @@ const Auth = ({children}:Props):JSX.Element => {
     const [ error, setError ] = useState<Boolean | null>(null)
 
     const checkToken = async () => {
-        await axios.get("http://localhost:3000/auth", { withCredentials:true })
+        await axios.get("/auth")
             .then(res => {
                 res.status === 200 && setError(false)    
             })

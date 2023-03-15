@@ -3,7 +3,7 @@ export interface HomeState {
 }
 
 export interface ChatState {
-    menuContent: "addContact" | "folders" | "contacts" | "logout" | "settings" | "contactProfile" | "chat",
+    menuContent: "addContact" | "folders" | "contacts" | "settings" | "contactProfile" | "chat",
     showContactProfile:boolean,
     isLoadingContacts:boolean,
     contactsData: ContactData[],
