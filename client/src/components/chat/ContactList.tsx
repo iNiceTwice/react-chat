@@ -5,6 +5,7 @@ import { ContactData } from "../../types";
 import ContactSkeleton from "./ContactSkeleton";
 import axios from "../../api/axios.config"
 import Menu from "./Menu";
+import { CiSearch } from "react-icons/ci";
 
 const ContactList = () => {
 
@@ -47,7 +48,12 @@ const ContactList = () => {
                 <Menu/>
             </div>
             <div className="px-4 mb-6 w-full">
-                <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
+                <div className="bg-slate-100 shadow-sm rounded-full flex items-center">
+                    <input autoFocus onChange={handleChange} className="w-full rounded-full px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
+                    <div className="p-1 mr-2">
+                        <CiSearch size={20} className="text-slate-400" />
+                    </div>
+                </div>
             </div>
             <div className="flex flex-col w-full h-full styled-scrollbar overflow-y-auto pb-16">
                 {

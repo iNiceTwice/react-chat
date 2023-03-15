@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import axios from "../../api/axios.config";
 import { User } from "../../types";
+import { CiUnread, CiRead } from "react-icons/ci";
 
 interface Error {
     isError: Boolean,
@@ -21,6 +22,7 @@ const registerSchema = yup.object().shape({
 const Register = () => {
 
     const { setState } = useContext(HomeContext)
+    const [showPassword, setShowPassword] = useState<Boolean>(false);
     const [ emailError, setEmailError ] = useState<Error>({isError:false})
     const navigate = useNavigate();
     const { values, errors, touched, handleChange, handleSubmit } = useFormik({
@@ -47,6 +49,11 @@ const Register = () => {
                 console.log(err)
             })
     }             
+
+    const handleShowPassword = () => {
+       setShowPassword(prev => !prev) 
+    }
+
     return ( 
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-12 text-slate-800 w-80">
@@ -57,17 +64,46 @@ const Register = () => {
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>Email</label>
-                    <input name="email" onChange={handleChange} className="shadow-sm py-1 px-4 rounded-full outline-none" />    
+                    <input 
+                        name="email" 
+                        onChange={handleChange} 
+                        className="shadow-sm py-1 px-4 rounded-full outline-none" 
+                    />    
                     { touched.email && Boolean(errors.email) && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ errors.email }</span> }
                     { emailError.isError && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ emailError.message }</span>}                                          
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>Password</label>
-                    <input name="password" onChange={handleChange} type="password" className="shadow-sm py-1 px-4 rounded-full outline-none"/>    
+                    <div className="w-full flex items-center shadow-sm rounded-full bg-white">
+                        <input 
+                            name="password"
+                            onChange={handleChange} 
+                            type={showPassword ? "text" : "password"} 
+                            className="w-full py-1 px-4 rounded-full outline-none"
+                        />
+                        <button onClick={handleShowPassword} type="button" className="w-8 h-8">
+                            {
+                                showPassword ?
+                                <CiUnread className="text-slate-400" size={20} />
+                                :   
+                                <CiRead className="text-slate-400" size={20} />   
+                            }
+                        </button>
+                    </div>
                     { touched.password && Boolean(errors.password) && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ errors.password }</span> }                                          
                 </div>
-                <button type="submit" className="shadow-sm bg-primary text-white rounded-full p-1 mt-2 outline-none focus:bg-primary/80 hover:bg-primary/80">Register</button>
-                <a onClick={()=>setState({ authOption:null })} className="flex gap-1 items-center cursor-pointer text-sm text-primary"><HiOutlineArrowLongLeft size={20}/>Back</a>
+                <button 
+                    type="submit" 
+                    className="shadow-sm bg-primary text-white rounded-full p-1 mt-2 outline-none focus:bg-primary/80 hover:bg-primary/80"
+                >
+                    Register
+                </button>
+                <a
+                     onClick={()=>setState({ authOption:null })} 
+                     className="flex gap-1 items-center cursor-pointer text-sm text-primary"
+                >
+                    <HiOutlineArrowLongLeft size={20}/>Back
+                </a>
             </form>
         </>
      );
