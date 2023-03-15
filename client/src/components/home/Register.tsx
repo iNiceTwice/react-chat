@@ -57,6 +57,11 @@ const Register = () => {
     return ( 
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-12 text-slate-800 w-80">
+                <div className="flex justify-center">
+                    <div className="p-4 w-40 h-40 flex items-center justify-center bg-white shadow-md rounded-full">
+                        <img src={`https://api.dicebear.com/5.x/big-smile/svg?seed=${values.username}`} alt="Your avatar."/>
+                    </div>
+                </div>
                 <div className="flex flex-col gap-1">
                     <label>Username</label>
                     <input name="username" onChange={handleChange} placeholder="eg.: Jhon Doe" className="shadow-sm py-1 px-4 rounded-full outline-none" /> 
