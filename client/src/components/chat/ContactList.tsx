@@ -41,7 +41,7 @@ const ContactList = () => {
     }
 
     return ( 
-        <>
+        <div className="h-full">
             <div className="flex justify-between w-full p-5">
                 <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
                 <Menu/>
@@ -49,7 +49,7 @@ const ContactList = () => {
             <div className="px-4 mb-6 w-full">
                 <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
             </div>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full h-full styled-scrollbar overflow-y-auto pb-16">
                 {
                     state.isLoadingContacts && 
                     <div className="flex flex-col w-full gap-10 px-4 mt-6">
@@ -88,7 +88,7 @@ const ContactList = () => {
                     ))
                 }
             </div>
-        </>
+        </div>
      );
 }
 
