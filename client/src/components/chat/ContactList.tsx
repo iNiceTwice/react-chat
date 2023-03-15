@@ -41,7 +41,7 @@ const ContactList = () => {
     }
 
     return ( 
-        <div className="h-full">
+        <div>
             <div className="flex justify-between w-full p-5">
                 <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
                 <Menu/>
