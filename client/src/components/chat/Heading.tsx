@@ -9,11 +9,7 @@ const Heading = () => {
     const { state, setState } = useContext(ChatContext)
 
     const handleClick = () => {
-        setState(prev => ({
-            ...prev, 
-            showContactProfile: !prev.showContactProfile,
-            menuContent:"contactProfile"
-        }))
+        setState(prev => ({...prev, showContactProfile: !prev.showContactProfile}))
     }
 
     return ( 
@@ -47,7 +43,7 @@ const Heading = () => {
                     </>
                 }
             </button>
-            <div className="h-full flex items-center md:hidden mr-4">
+            <div className="h-full flex items-center md:hidden mr-4 bg-secondary">
                 <Menu/>
             </div>
         </div>

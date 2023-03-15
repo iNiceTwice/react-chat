@@ -21,7 +21,13 @@ const MobileChat = () => {
     return ( 
         <div className="flex w-full h-full md:hidden overflow-hidden">
             {
-                state.menuContent === "chat" && 
+                state.showContactProfile && 
+                <div className="flex w-full">
+                    <ContactProfile/>
+                </div>
+            }
+            {
+                (state.menuContent === "chat" && !state.showContactProfile) &&
                 <div className='flex flex-col h-full w-full bg-terceary'>
                     <Heading/>
                     <Conversation/>
@@ -29,31 +35,25 @@ const MobileChat = () => {
                 </div>
             }
             {
-                state.menuContent === "folders" && 
+                (state.menuContent === "folders" && !state.showContactProfile) &&
                 <div className='flex flex-col h-full w-full bg-terceary'>
                     <Folders/>
                 </div>
             }
             {
-                state.menuContent === "contactProfile" && 
-                <div className="flex w-full">
-                    <ContactProfile/>
-                </div>
-            }
-            {
-                state.menuContent === "contacts" && 
+                (state.menuContent === "contacts" && !state.showContactProfile) &&
                 <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
                     <ContactList/>
                 </div>
             }
             {
-                state.menuContent === "addContact" && 
+                (state.menuContent === "addContact" && !state.showContactProfile) &&
                 <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
                     <AddContact/>
                 </div>
             }
             {
-                state.menuContent === "settings" && 
+                (state.menuContent === "settings" && !state.showContactProfile) &&
                 <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
                     <UserProfile 
                         img={user.profileImage}
