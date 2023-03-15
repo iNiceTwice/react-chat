@@ -1,4 +1,5 @@
 import { IoCopyOutline } from "react-icons/io5"
+import Menu from "./Menu";
 
 interface Props {
     children?: JSX.Element | JSX.Element[],
@@ -13,6 +14,9 @@ const UserProfile = ({ children, img, username, publicId, email }:Props) => {
     return ( 
         <>
             <div className="relative flex justify-center items-end bg-primary h-36 w-full border-b">
+                <div className="absolute top-0 right-0 p-4">
+                    <Menu/>
+                </div>
                <div className="absolute -bottom-1/3 bg-white hover:bg-primary rounded-full shadow-md p-2 flex items-center justify-center">
                     <img src={img} alt={username} className="w-24"  />
                </div>

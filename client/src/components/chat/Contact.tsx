@@ -13,7 +13,7 @@ const Contact = ({username, isOnline, img, lastMessage, lastMessageTime, unreadM
     
     return ( 
         <>
-            <div className="w-full flex items-center py-6 gap-4 hover:bg-slate-100/80 p-2 rounded-md">
+            <div className="w-full flex items-center py-6 gap-4 hover:bg-slate-100/80 px-4 rounded-md">
                 <div className="relative p-1 rounded-full w-fit bg-primary">
                     <img src={ img } alt={username} className="w-14 h-fit"/>
                     {

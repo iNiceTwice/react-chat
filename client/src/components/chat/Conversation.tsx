@@ -45,7 +45,6 @@ const Conversation = () => {
         }
     }
 
-
     useMemo(() => {
         if(state.currentMessage.text !== ""){
             setNewMessages(prev => ([...prev, state.currentMessage]))
@@ -64,6 +63,7 @@ const Conversation = () => {
     useEffect(() => {
         lastMessageRef.current?.scrollIntoView()
     }, [messages])
+
     useEffect(() => {
         lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
     }, [currentNewMessages])

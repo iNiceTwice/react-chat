@@ -4,6 +4,7 @@ import { ChatContext } from "../../context/chat/chatContext";
 import { ContactData } from "../../types";
 import ContactSkeleton from "./ContactSkeleton";
 import axios from "../../api/axios.config"
+import Menu from "./Menu";
 
 const ContactList = () => {
 
@@ -25,6 +26,7 @@ const ContactList = () => {
         }
         setState(prev => ({
             ...prev, 
+            menuContent:"chat",
             currentConversation:contact,
             contactsData: prev.contactsData.map(c => {
                 if(c.contactID === contact.contactID){
@@ -40,10 +42,11 @@ const ContactList = () => {
 
     return ( 
         <>
-            <div className="w-full p-5">
+            <div className="flex justify-between w-full p-5">
                 <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
+                <Menu/>
             </div>
-            <div className="px-4 mb-6">
+            <div className="px-4 mb-6 w-full">
                 <input autoFocus onChange={handleChange} className="w-full rounded-full shadow-sm px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
             </div>
             <div className="flex flex-col w-full">

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import axios from "../../api/axios.config"
 import ErrorMessage from "../ErrorMessage"
+import Menu from "./Menu"
 
 interface Error {
     isError: boolean,
@@ -28,8 +29,9 @@ const AddContact = () => {
 
     return (
         <>
-            <div className="w-full p-5">
-                <h2 className="text-2xl py-4 text-primary font-bold">Add a Contact</h2>
+            <div className="flex justify-between w-full p-5">
+                <h2 className="text-2xl py-4 text-primary font-bold">Add a contact</h2>
+                <Menu/>
             </div>
             <div className="flex flex-col p-5">
                 <form onSubmit={ handleSubmit } className="flex flex-col gap-2 mt-16">

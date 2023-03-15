@@ -31,40 +31,40 @@ const SideMenu = () => {
                 <img src={Logo} width={35} className="hover:rotate-12 transition-all"/>
             </button>
             <div className="flex flex-col gap-6">
-                <button onClick={()=> setState(prev => ({...prev, sideContent:"addContact"}))} className={ state.sideContent === "addContact" ? buttonStyles.selected : buttonStyles.unselected}>
+                <button onClick={()=> setState(prev => ({...prev, menuContent:"addContact"}))} className={ state.menuContent === "addContact" ? buttonStyles.selected : buttonStyles.unselected}>
                     <div className="flex items-center justify-center">
                         <CiUser className="-ml-1" size={24}/>
                         <span className="absolute top-2 left-[60%]">+</span>
                     </div>
                 </button>
                 <button 
-                    onClick={()=> setState(prev => ({...prev, sideContent:"folders"}))} 
-                    className={ state.sideContent === "folders" ? buttonStyles.selected : buttonStyles.unselected}
+                    onClick={()=> setState(prev => ({...prev, menuContent:"folders"}))} 
+                    className={ state.menuContent === "folders" ? buttonStyles.selected : buttonStyles.unselected}
                 >
                     <CiFolderOn size={24}/>
                 </button>
                 <button 
-                    onClick={()=> setState(prev => ({...prev, sideContent:"contacts"}))} 
-                    className={ state.sideContent === "contacts" ? buttonStyles.selected : buttonStyles.unselected }
+                    onClick={()=> setState(prev => ({...prev, menuContent:"contacts"}))} 
+                    className={ state.menuContent === "contacts" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiChat1 size={24}/>
                 </button>
                 <button 
                     onClick={ handleLogout }
-                    className={ state.sideContent === "logout" ? buttonStyles.selected : buttonStyles.unselected }
+                    className={ state.menuContent === "logout" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiLogout size={24}/>
                 </button>
                 <button 
-                    onClick={()=> setState(prev => ({...prev, sideContent:"settings"}))} 
-                    className={ state.sideContent === "settings" ? buttonStyles.selected : buttonStyles.unselected }
+                    onClick={()=> setState(prev => ({...prev, menuContent:"settings"}))} 
+                    className={ state.menuContent === "settings" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiSettings size={24}/>
                 </button>
 
             </div>
             <div className="flex flex-col mb-12">
-                <button onClick={()=> setState(prev => ({...prev, sideContent:"settings"}))} className="p-2 rounded-full bg-white hover:bg-primary transition-colors shadow-md">
+                <button onClick={()=> setState(prev => ({...prev, menuContent:"settings"}))} className="p-2 rounded-full bg-white hover:bg-primary transition-colors shadow-md">
                     <img src={user.profileImage} alt={user.username} className="w-10"/>
                 </button>
             </div>

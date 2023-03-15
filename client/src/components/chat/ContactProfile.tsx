@@ -6,9 +6,9 @@ const ContactProfile = () => {
 
     const { state } = useContext(ChatContext)
 
-    if(state.sideContactData){
+    if(state.showContactProfile){
         return ( 
-            <div className="flex flex-col w-[22rem] border-l-2 border-slate-100 bg-secondary">
+            <div className="lg:flex flex-col md:w-[22rem] md:border-l-2 border-slate-100 bg-secondary w-full">
                 <UserProfile
                     username={state.currentConversation.contactName}
                     img={state.currentConversation.contactImage}

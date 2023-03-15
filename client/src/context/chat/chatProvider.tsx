@@ -9,8 +9,8 @@ interface Props {
 }
 
 const initialState:ChatState = {
-    sideContent:"contacts",
-    sideContactData:false,
+    menuContent:"contacts",
+    showContactProfile:false,
     isLoadingContacts:true,
     contactsData:[],
     currentMessage:{
@@ -33,14 +33,14 @@ const initialState:ChatState = {
         }
     }
 }
-
 export const ChatProvider = ({children}:Props) => {
     
     let socket = useRef<Socket>()
     const [ state, setState ] = useState<ChatState>(initialState)
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const encodedUserID = user.publicId.replace("#","%23")
-
+    
+    console.log(state.menuContent)
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
             .then(res => {
