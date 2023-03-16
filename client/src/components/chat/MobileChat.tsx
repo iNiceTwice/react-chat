@@ -9,6 +9,7 @@ import ContactProfile from './ContactProfile';
 import Conversation from './Conversation';
 import Folders from './Folders';
 import Heading from './Heading';
+import Settings from './Settings';
 import SideDisplay from './SideDisplay';
 import UserProfile from './UserProfile';
 
@@ -28,7 +29,7 @@ const MobileChat = () => {
             }
             {
                 (state.menuContent === "chat" && !state.showContactProfile) &&
-                <div className='flex flex-col h-full w-full bg-terceary'>
+                <div className='flex flex-col h-full w-full bg-tertiary dark:bg-tertiary_dark'>
                     <Heading/>
                     <Conversation/>
                     <ChatInput/>
@@ -36,37 +37,26 @@ const MobileChat = () => {
             }
             {
                 (state.menuContent === "folders" && !state.showContactProfile) &&
-                <div className='flex flex-col h-full w-full bg-terceary'>
+                <div className='flex flex-col h-full w-full bg-tertiary dark:bg-tertiary_dark'>
                     <Folders/>
                 </div>
             }
             {
                 (state.menuContent === "contacts" && !state.showContactProfile) &&
-                <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
+                <div className="bg-secondary border-r-2 border-slate-100 dark:bg-secondary_dark dark:border-tertiary_dark h-full w-full md:w-[40rem]">
                     <ContactList/>
                 </div>
             }
             {
                 (state.menuContent === "addContact" && !state.showContactProfile) &&
-                <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
+                <div className="bg-secondary border-r-2 border-slate-100 dark:bg-secondary_dark dark:border-tertiary_dark h-full w-full md:w-[40rem]">
                     <AddContact/>
                 </div>
             }
             {
                 (state.menuContent === "settings" && !state.showContactProfile) &&
-                <div className="bg-secondary border-r-2 border-slate-100 h-full w-full md:w-[40rem]">
-                    <UserProfile 
-                        img={user.profileImage}
-                        username={user.username}
-                        publicId={user.publicId}
-                        email={user.email}
-                    >
-                        <div className="flex gap-x-4 items-center text-slate-800 mt-4">
-                            <CiLight size={25} />
-                            <Switch />
-                            <CiDark size={25} />
-                        </div> 
-                    </UserProfile> 
+                <div className="bg-secondary border-r-2 border-slate-100 dark:bg-secondary_dark dark:border-tertiary_dark h-full w-full md:w-[40rem]">
+                    <Settings/>
                 </div>
             }
         </div>

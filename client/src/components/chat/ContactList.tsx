@@ -48,10 +48,10 @@ const ContactList = () => {
                 <Menu/>
             </div>
             <div className="px-4 mb-6 w-full">
-                <div className="bg-slate-100 shadow-sm rounded-full flex items-center">
-                    <input autoFocus onChange={handleChange} className="w-full rounded-full px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
+                <div className="bg-slate-100 dark:bg-tertiary_dark dark:text-slate-200 shadow-sm rounded-full flex items-center">
+                    <input autoFocus onChange={handleChange} className=" dark:bg-tertiary_dark dark:text-slate-200 w-full rounded-full px-4 py-2 text-sm bg-slate-100 outline-none" placeholder="Search..."/>
                     <div className="p-1 mr-2">
-                        <CiSearch size={20} className="text-slate-400" />
+                        <CiSearch size={20} className="text-slate-400 dark:text-slate-200" />
                     </div>
                 </div>
             </div>

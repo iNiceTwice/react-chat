@@ -8,7 +8,7 @@ const Folders = () => {
                 <Menu/>
             </div>
             <div className="flex justify-center">
-                <h3 className='pt-32 text-2xl font-semibold text-slate-800/80'>Coming soon...</h3>
+                <h3 className='pt-32 text-2xl font-semibold text-slate-800/80 dark:text-slate-200'>Coming soon...</h3>
             </div>
         </div>
     );

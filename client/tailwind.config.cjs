@@ -1,4 +1,5 @@
 module.exports = {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,7 +9,9 @@ module.exports = {
       colors:{
         primary:"#4785FF",
         secondary:"#fafcff",
-        terceary:"#f6f8fc"
+        tertiary:"#f6f8fc",
+        secondary_dark:"#212329",
+        tertiary_dark:"#131517",
       }
     },
   },

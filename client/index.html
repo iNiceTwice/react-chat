@@ -11,6 +11,8 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
   <script>
+     const { theme } = JSON.parse(localStorage.getItem("chatUser")) 
+    document.querySelector("html").classList.add(theme === "dark" ? "dark" : "")
     window.global = window;
   </script>
 </html>

@@ -46,13 +46,13 @@ const AddContact = () => {
                     {
                         error.isError && <ErrorMessage message={error.message} />
                     }
-                    <label htmlFor="contact" className="text-slate-800/80">His/Her public id:</label>
+                    <label htmlFor="contact" className="text-slate-800/80 dark:text-slate-200">New contact id:</label>
                     <input 
                         autoFocus
                         placeholder="username#9430"
                         name="contact"
                         type="text" 
-                        className="px-4 py-2 rounded-full w-full bg-slate-100 shadow-sm outline-none" 
+                        className="px-4 py-2 rounded-full w-full bg-slate-100 dark:bg-tertiary_dark dark:text-slate-200 shadow-sm outline-none" 
                         onChange={ (e) => setContactID(e.target.value) }
                     />
                     <button type="submit" className="px-4 py-2 bg-primary shadow-sm rounded-full text-white hover:bg-primary/80 transition-colors">Add</button>

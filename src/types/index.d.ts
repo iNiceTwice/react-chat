@@ -20,6 +20,7 @@ export interface UserDocument {
   username:string,
   password:string,
   profileImage:string,
+  themePreference:"dark" | "light"
   createdAt: Date;
   updateAt: Date;
 }

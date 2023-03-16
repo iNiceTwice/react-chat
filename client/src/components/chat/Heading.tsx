@@ -26,7 +26,7 @@ const Heading = () => {
         <div className="flex">
             {
             state.currentConversation ?
-            <button onClick={handleClick} className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 border-slate-100 bg-secondary active:bg-slate-100 transition-colors">
+            <button onClick={handleClick} className="flex items-center justify-between w-full h-32 px-4 md:px-10 py-2 border-b-2 border-slate-100 bg-secondary dark:border-tertiary_dark dark:bg-secondary_dark active:bg-slate-100 transition-colors">
                 {
                     state.isLoadingContacts ?
                     <div className="w-2/3 md:w-1/4">
@@ -39,7 +39,7 @@ const Heading = () => {
                                 <img src={ state.currentConversation?.contactImage } alt={ state.currentConversation?.contactName } className="w-14" />
                             </div>
                             <div className="flex flex-col items-start">
-                                <h2 className="text-2xl font-semibold text-slate-800/80">{ state.currentConversation?.contactName }</h2>
+                                <h2 className="text-3xl font-semibold dark:text-slate-100 text-slate-800/80">{ state.currentConversation?.contactName }</h2>
                                 {
                                     state.currentConversation?.isOnline ?
                                     <p className="text-green-500 font-semibold text-sm">Online</p>
@@ -48,11 +48,11 @@ const Heading = () => {
                                 }   
                             </div>
                         </div>
-                        <div className="md:flex gap-4 text-slate-600 hidden">
-                            <button className="flex items-center justify-center h-10 w-10 hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
+                        <div className="md:flex gap-4 text-slate-600 dark:text-slate-100 hidden">
+                            <button className="flex items-center justify-center h-10 w-10 dark:hover:bg-primary hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
                                 <CiVideoOn size={25} />
                             </button>
-                            <button className="flex items-center justify-center h-10 w-10 hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
+                            <button className="flex items-center justify-center h-10 w-10 dark:hover:bg-primary hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
                                 <CiPhone size={25} />
                             </button>
                         </div>        
@@ -60,9 +60,9 @@ const Heading = () => {
                 }
             </button>
             :
-            <button className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 border-slate-100 bg-secondary active:bg-slate-100 transition-colors"></button>
+            <button className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 dark:border-tertiary_dark dark:bg-secondary_dark border-slate-100 bg-secondary active:bg-slate-100 transition-colors"></button>
             }
-            <div className="h-full flex items-center md:hidden mr-4 bg-secondary">
+            <div className="h-full flex items-center md:hidden pr-4 border-b-2 border-slate-100 bg-secondary dark:border-tertiary_dark dark:bg-secondary_dark">
                 <Menu/>
             </div>
         </div>

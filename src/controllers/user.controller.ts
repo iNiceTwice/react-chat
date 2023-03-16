@@ -47,8 +47,9 @@ export const registerUser = async (req: Request, res:Response):Promise<Object> =
         user:{
             publicId:newUser.publicId,
             email:newUser.email,
-            profileImage:newUser.profileImage,
             name:newUser.username,
+            profileImage:newUser.profileImage,
+            theme:newUser.themePreference            
         }
     })
 }
@@ -85,12 +86,24 @@ export const loginUser = async (req: Request, res:Response):Promise<Object> => {
                 publicId:user.publicId,
                 email:user.email,
                 name:user.username,
-                profileImage:user.profileImage
+                profileImage:user.profileImage,
+                theme:user.themePreference
             }
         })
     }
-}
+} 
 
+export const changeTheme = async (req: Request, res:Response) => {
+    const { id, theme } = req.body
+   
+    const user = await USERS.find({ _id:id }, { themePreference:theme })
+
+    if(!user){
+        return res.status(404).json({message: "User not found"})
+    }
+
+    return res.status(200)
+}
 export const logoutUser = (req: Request, res:Response) => {
     res.clearCookie("chatToken")
     return res.end()

@@ -13,7 +13,7 @@ const ContactProfile = () => {
 
     if(state.showContactProfile){
         return ( 
-            <div className="relative lg:flex flex-col md:w-[22rem] md:border-l-2 border-slate-100 bg-secondary w-full">
+            <div className="relative lg:flex flex-col md:w-[22rem] md:border-l-2 border-slate-100 bg-secondary dark:bg-secondary_dark dark:border-tertiary_dark w-full">
                 <button onClick={handleClick} className="absolute z-20 top-0 m-6">
                     <IoCloseOutline className="text-white" size={30} />
                 </button>

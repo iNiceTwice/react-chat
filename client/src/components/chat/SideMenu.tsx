@@ -45,13 +45,13 @@ const SideMenu = () => {
                 </button>
                 <button 
                     onClick={()=> setState(prev => ({...prev, menuContent:"contacts"}))} 
-                    className={ state.menuContent === "contacts" ? buttonStyles.selected : buttonStyles.unselected }
+                    className={ state.menuContent === "contacts" || state.menuContent === "chat" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiChat1 size={24}/>
                 </button>
                 <button 
                     onClick={ handleLogout }
-                    className={ state.menuContent === "logout" ? buttonStyles.selected : buttonStyles.unselected }
+                    className={ buttonStyles.unselected }
                 >
                     <CiLogout size={24}/>
                 </button>

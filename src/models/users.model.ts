@@ -25,6 +25,11 @@ const UserSchema = new Schema<UserDocument>({
     profileImage:{
         type:String,
         required:true
+    },
+    themePreference:{
+        type:String,
+        default:"light",
+        required:true
     }
 },{
     timestamps:true

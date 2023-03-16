@@ -33,9 +33,9 @@ const OwnMessage = ({ from, text, sendedAt, onlyText }:Omit<Props, "image" | "ow
                         <img src={ user.profileImage } alt={ from } className="w-10 lg:w-12" />
                     </div>
                     <div className="flex flex-col items-end mr-20">
-                        <div className="flex gap-x-4 items-center text-slate-800/60">
+                        <div className="flex gap-x-4 items-center dark:text-slate-200 text-slate-800/60">
                             <p className="text-xs">{ sendedAt }</p>
-                            <h2 className="font-semibold text-lg text-slate-800/90">You</h2>
+                            <h2 className="font-semibold text-lg dark:text-slate-200 text-slate-800/90">You</h2>
                         </div>
                         <div className="mt-2 flex gap-1 justify-end w-full">
                             <div className="bg-primary py-2 px-4 rounded-lg rounded-tr-none text-white shadow-sm max-w-[12rem] lg:max-w-2xl break-words h-fit">
@@ -57,7 +57,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                 <div className="w-full flex flex-col items-start pl-4">
                     <div className="ml-20">
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[15rem] lg:max-w-2xl break-words">
+                            <div className="bg-white dark:bg-secondary_dark py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 dark:text-slate-200 shadow-sm max-w-[15rem] lg:max-w-2xl break-words">
                                 { text }
                             </div>
                         </div>
@@ -69,12 +69,12 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                         <img src={ image } alt={ from } className="w-10 lg:w-12" />
                     </div>
                     <div className="ml-20">
-                        <div className="flex gap-x-4 items-center text-slate-800/60">
-                            <h2 className="font-semibold text-slate-800/90 text-lg">{ from }</h2>
+                        <div className="flex gap-x-4 items-center text-slate-800/60 dark:text-slate-200">
+                            <h2 className="font-semibold text-slate-800/90 dark:text-slate-200 text-lg">{ from }</h2>
                             <p className="text-xs">{ sendedAt }</p>
                         </div>
                         <div className="mt-2 flex gap-1">
-                            <div className="bg-white py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 shadow-sm max-w-[12rem] lg:max-w-2xl break-words">
+                            <div className="bg-white dark:bg-secondary_dark py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 dark:text-slate-200 shadow-sm max-w-[12rem] lg:max-w-2xl break-words">
                                 { text }
                             </div>
                         </div>
