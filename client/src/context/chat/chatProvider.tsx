@@ -40,7 +40,7 @@ export const ChatProvider = ({children}:Props) => {
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const encodedUserID = user.publicId.replace("#","%23")
     
-    console.log(state.menuContent)
+
     const getContacts = ():void => {
         axios.get(`/conversation?userID=${encodedUserID}`)
             .then(res => {
@@ -74,7 +74,7 @@ export const ChatProvider = ({children}:Props) => {
             })        
             .catch(err => console.log(err))       
     }
-    console.log(state.currentConversation)
+
     const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
         socket.current?.emit("send-message", message)
 
@@ -145,11 +145,18 @@ export const ChatProvider = ({children}:Props) => {
         })
     }
 
+    const userNotHaveContacts = () => {
+        if(!state.contactsData.length){
+            setState(prev => ({...prev, menuContent:"addContact"}))
+        }
+    }
+
     useEffect(() => {
         socket.current = io("http://localhost:3001")
         getContacts()
+        userNotHaveContacts()
         getMessage()
-    }, []);    //antes estaba state.currentConversation y currentMessage verif si hay errores
+    }, []);  
 
     return (
         <ChatContext.Provider
