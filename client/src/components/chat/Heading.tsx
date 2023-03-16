@@ -3,15 +3,23 @@ import { ChatContext } from "../../context/chat/chatContext";
 import { CiVideoOn, CiPhone } from "react-icons/ci"
 import ContactSkeleton from "./ContactSkeleton";
 import Menu from "./Menu";
+import { toast } from "react-toastify";
 
 const Heading = () => {
 
     const { state, setState } = useContext(ChatContext)
+    
+    const notify = () => toast.warning("Feature coming soon...")
 
     const handleClick = () => {
         if(state.currentConversation){
             setState(prev => ({...prev, showContactProfile: !prev.showContactProfile}))
         }
+    }
+
+    const comingSoon = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation()
+        notify()
     }
 
     return ( 
@@ -41,8 +49,12 @@ const Heading = () => {
                             </div>
                         </div>
                         <div className="md:flex gap-4 text-slate-600 hidden">
-                            <CiVideoOn size={25} />
-                            <CiPhone size={25} />
+                            <button className="flex items-center justify-center h-10 w-10 hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
+                                <CiVideoOn size={25} />
+                            </button>
+                            <button className="flex items-center justify-center h-10 w-10 hover:bg-slate-100 transition colors rounded-full" onClick={event => comingSoon(event)}>
+                                <CiPhone size={25} />
+                            </button>
                         </div>        
                     </>
                 }
