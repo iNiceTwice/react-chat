@@ -1,5 +1,6 @@
 import { IoCopyOutline } from "react-icons/io5"
 import Menu from "./Menu";
+import { toast} from 'react-toastify'
 
 interface Props {
     children?: JSX.Element | JSX.Element[],
@@ -10,6 +11,13 @@ interface Props {
 }
 
 const UserProfile = ({ children, img, username, publicId, email }:Props) => {
+    
+    const notify = () => toast.success("Copied to clipboard.")
+
+    const handleClick = () => {
+        navigator.clipboard.writeText(publicId)
+        notify()
+    }
 
     return ( 
         <>
@@ -26,7 +34,7 @@ const UserProfile = ({ children, img, username, publicId, email }:Props) => {
                 <div className="flex flex-col gap-3 mt-10 px-4">
                     <div className="flex items-center">
                         <h4 className="text-slate-800/80"><span className="font-medium mr-2 text-slate-800/90">Public ID:</span> {publicId}</h4>
-                        <button onClick={() => navigator.clipboard.writeText(publicId)} className="inline ml-4 text-slate-800/80 hover:bg-primary hover:text-white p-2 rounded-lg"><IoCopyOutline size={18}/></button>
+                        <button onClick={handleClick} className="inline ml-4 text-slate-800/80 hover:bg-primary hover:text-white p-2 rounded-lg"><IoCopyOutline size={18}/></button>
                     </div>
                     {
                         email ?

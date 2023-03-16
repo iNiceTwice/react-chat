@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "../../api/axios.config"
 import ErrorMessage from "../ErrorMessage"
 import Menu from "./Menu"
+import { toast} from 'react-toastify'
+import { ChatContext } from "../../context/chat/chatContext"
 
 interface Error {
     isError: boolean,
@@ -10,17 +12,23 @@ interface Error {
 
 const AddContact = () => {
 
+    const { setState, getContacts } = useContext(ChatContext)
+    const user = JSON.parse(localStorage.getItem("chatUser") as string)
+    const notify = () => toast.success("Contact added!")
     const [ contactID, setContactID ] = useState<string>()
     const [ error, setError ] = useState<Error>({
         isError:false,
         message:""
     })
-    const user = JSON.parse(localStorage.getItem("chatUser") as string)
     
     const handleSubmit = (e:React.SyntheticEvent) => {
         e.preventDefault()
         axios.post(`/conversation`,{ user:user.publicId, newContact: contactID})
-            .then(res => console.log(res.data))
+            .then(res => {
+                getContacts()
+                notify()
+                setState(prev => ({...prev, menuContent:"contacts"}))
+            })
             .catch(err => {
                 console.log(err)
                 setError({isError:true, message:err.response.data.message}) 

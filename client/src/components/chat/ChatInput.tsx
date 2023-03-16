@@ -15,7 +15,8 @@ const ChatInput = () => {
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
-        if(message.trim() === "") return
+        if(message.trim() === "" || !state.currentConversation) return
+        
         setShowEmojiPicker(false)
 
         axios.post("/message", {

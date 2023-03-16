@@ -29,8 +29,8 @@ export const addConversation = async (req: Request, res:Response):Promise<Object
     
     if(contactExists.length === 0) return res.status(404).json({message:"User not found"})
     
-    const conversationExists = await CONVERSATIONS.find({members:newContact})
-    if(conversationExists) return res.status(500).json({message:"Contact already added."})
+    const conversationExists = await CONVERSATIONS.find({members:{ $all: [user, newContact] } })
+    if(conversationExists.length !== 0) return res.status(500).json({message:"Contact already added."})
 
     const newConversation = new CONVERSATIONS({members:[user, newContact]})
     await newConversation.save()

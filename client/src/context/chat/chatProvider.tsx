@@ -60,6 +60,7 @@ export const ChatProvider = ({children}:Props) => {
                     setState(prev => ({
                         ...prev,
                         isLoadingContacts:false,
+                        menuContent:connected.length === 0 ? "addContact" : "contacts", 
                         contactsData:sortByDate(connected),
                         currentConversation:sortByDate(connected)[0]
                     }))
@@ -146,7 +147,7 @@ export const ChatProvider = ({children}:Props) => {
     }
 
     const userNotHaveContacts = () => {
-        if(!state.contactsData.length){
+        if(!state.contactsData?.length){
             setState(prev => ({...prev, menuContent:"addContact"}))
         }
     }
@@ -154,7 +155,6 @@ export const ChatProvider = ({children}:Props) => {
     useEffect(() => {
         socket.current = io("http://localhost:3001")
         getContacts()
-        userNotHaveContacts()
         getMessage()
     }, []);  
 
@@ -163,7 +163,8 @@ export const ChatProvider = ({children}:Props) => {
             value={{
                 state,
                 setState,
-                sendMessage
+                sendMessage,
+                getContacts
             }}
         >
             { children }
