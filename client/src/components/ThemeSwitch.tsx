@@ -9,19 +9,20 @@ const ThemeSwitch = () => {
     const [theme, setTheme] = useState<Boolean>(user?.theme === "dark");
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        
-        setTheme(event.target.checked)
-        localStorage.setItem("chatUser", JSON.stringify({...user, theme:event.target.checked ? "dark" : "light" }))
 
+        setTheme(event.target.checked)
+        
+        localStorage.setItem("chatUser", JSON.stringify({...user, theme:event.target.checked ? "dark" : "light" }))
+  
         axios.put("/theme", {
-            id:user.publicID,
-            theme: theme ? "dark" : "light"
+            id:user.publicId,
+            theme: event.target.checked ? "dark" : "light"
         })
 
-        theme ?
-        document.querySelector("html")?.classList.remove("dark")
-        :
+        event.target.checked ?
         document.querySelector("html")?.classList.add("dark")
+        :
+        document.querySelector("html")?.classList.remove("dark")
 
     }
 

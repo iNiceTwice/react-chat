@@ -34,10 +34,14 @@ const Contact = ({username, isOnline, img, lastMessage, lastMessageTime, unreadM
                         }
                     </div>
                     {
-                        lastMessage &&
+                        lastMessage ?
                         <div className="grid grid-cols-5 w-full text-xs font-medium text-slate-800/40 dark:text-slate-200 text-start">
                             <p className="truncate col-span-4">{ lastMessage }</p>
                             <span className="text-end">{ lastMessageTime }</span>
+                        </div>
+                        :
+                        <div className="w-full text-xs font-medium text-slate-800/40 dark:text-slate-200 text-start">
+                            <p>Click to start a chat with { username }! </p>
                         </div>
                     }
                 </div>
