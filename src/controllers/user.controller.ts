@@ -11,8 +11,10 @@ export const registerUser = async (req: Request, res:Response):Promise<Object> =
     }
     
     const emailAlreadyExists = await USERS.findOne({ email })
-    if( emailAlreadyExists ){
-        return res.status(409).send("Email already exists")
+    const usernameAlreadtExists = await USERS.findOne({ username })
+
+    if( emailAlreadyExists || usernameAlreadtExists){
+        return res.status(409).json({username:Boolean(usernameAlreadtExists), email: Boolean(emailAlreadyExists)})
     }
 
     const encryptedPass = hashSync(password, genSaltSync(10))

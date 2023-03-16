@@ -9,8 +9,11 @@ import { User } from "../../types";
 import { CiUnread, CiRead } from "react-icons/ci";
 
 interface Error {
-    isError: Boolean,
-    message?: "Email already taken." | "Server error, try again."
+    isError:{
+        username:Boolean,
+        email:Boolean
+    },
+    message?: "already taken." | "Server error, try again."
 }
 
 const registerSchema = yup.object().shape({
@@ -21,10 +24,15 @@ const registerSchema = yup.object().shape({
 
 const Register = () => {
 
+    const navigate = useNavigate();
     const { setState } = useContext(HomeContext)
     const [showPassword, setShowPassword] = useState<Boolean>(false);
-    const [ emailError, setEmailError ] = useState<Error>({isError:false})
-    const navigate = useNavigate();
+    const [ alreadyTakenError, setAlreadyTakenError ] = useState<Error>({
+        isError:{
+            username:false,
+            email:false
+        }
+    })
     const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues:{
         username:"",
@@ -45,7 +53,20 @@ const Register = () => {
             })
             .catch((err) => {
                 err.response.status !== 409 ?
-                setEmailError({isError:true, message:"Server error, try again."}) : setEmailError({isError:true, message:"Email already taken."})
+                setAlreadyTakenError({
+                    isError:{
+                        username:err.response.data.username,
+                        email:err.response.data.email
+                    }, message:"Server error, try again."
+                }) 
+                : 
+                setAlreadyTakenError({
+                    isError:{
+                        username:err.response.data.username,
+                        email:err.response.data.email
+                    }, 
+                    message:"already taken."
+                })
                 console.log(err)
             })
     }             
@@ -65,7 +86,8 @@ const Register = () => {
                 <div className="flex flex-col gap-1">
                     <label>Username</label>
                     <input name="username" onChange={handleChange} placeholder="eg.: Jhon Doe" className="shadow-sm py-1 px-4 rounded-full outline-none" /> 
-                    { touched.username && Boolean(errors.username) && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ errors.username }</span> }                      
+                    { touched.username && Boolean(errors.username) && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ errors.username }</span> }
+                    { alreadyTakenError.isError.username && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{`Username is ${ alreadyTakenError.message }` }</span>}                                            
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>Email</label>
@@ -75,7 +97,7 @@ const Register = () => {
                         className="shadow-sm py-1 px-4 rounded-full outline-none" 
                     />    
                     { touched.email && Boolean(errors.email) && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ errors.email }</span> }
-                    { emailError.isError && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{ emailError.message }</span>}                                          
+                    { alreadyTakenError.isError.email && <span className="ml-4 mb-1 -mt-1 text-sm text-red-600 w-full">{`Email is ${ alreadyTakenError.message }`  }</span>}                                          
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>Password</label>

@@ -9,7 +9,7 @@ const Conversation = () => {
 
     const user = JSON.parse(localStorage.getItem("chatUser") as string)
     const { state } = useContext(ChatContext)
-    const [isLoading, setIsLoading] = useState<Boolean>(true);
+    const [isLoading, setIsLoading] = useState<Boolean>(true)
     const [ messages, setMessages ] = useState<MessageFormat[]>([])
     const [ newMessages, setNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
     const [ currentNewMessages, setCurrentNewMessages ] = useState<Omit<SocketMessage, "createdAt" | "_id">[]>([])
@@ -18,7 +18,7 @@ const Conversation = () => {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const getMessages = () => {
-        axios.get(`/messages?id=${state.currentConversation.id}`)
+        axios.get(`/messages?id=${state.currentConversation?.id}`)
             .then(res => {
                  setMessages(res.data)
                  setIsLoading(false)
