@@ -9,11 +9,15 @@ const Heading = () => {
     const { state, setState } = useContext(ChatContext)
 
     const handleClick = () => {
-        setState(prev => ({...prev, showContactProfile: !prev.showContactProfile}))
+        if(state.currentConversation){
+            setState(prev => ({...prev, showContactProfile: !prev.showContactProfile}))
+        }
     }
 
     return ( 
         <div className="flex">
+            {
+            state.currentConversation ?
             <button onClick={handleClick} className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 border-slate-100 bg-secondary active:bg-slate-100 transition-colors">
                 {
                     state.isLoadingContacts ?
@@ -43,6 +47,9 @@ const Heading = () => {
                     </>
                 }
             </button>
+            :
+            <button className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 border-slate-100 bg-secondary active:bg-slate-100 transition-colors"></button>
+            }
             <div className="h-full flex items-center md:hidden mr-4 bg-secondary">
                 <Menu/>
             </div>
