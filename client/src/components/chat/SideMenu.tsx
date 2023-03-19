@@ -44,7 +44,7 @@ const SideMenu = () => {
                     <CiFolderOn size={24}/>
                 </button>
                 <button 
-                    onClick={()=> setState(prev => ({...prev, menuContent:"contacts"}))} 
+                    onClick={()=> setState(prev => ({...prev, menuContent:"chat"}))} 
                     className={ state.menuContent === "contacts" || state.menuContent === "chat" ? buttonStyles.selected : buttonStyles.unselected }
                 >
                     <CiChat1 size={24}/>

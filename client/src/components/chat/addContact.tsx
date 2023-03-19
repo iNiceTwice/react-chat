@@ -25,7 +25,7 @@ const AddContact = () => {
         e.preventDefault()
         axios.post(`/conversation`,{ user:user.publicId, newContact: contactID})
             .then(res => {
-                getContacts({refresh:true})
+                getContacts()
                 notify()
                 setState(prev => ({...prev, menuContent:"contacts"}))
             })

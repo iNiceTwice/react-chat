@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react"
 import { ChatContext } from "./chatContext"
-import { ChatState, ContactData, getContactsProps, SocketMessage } from "../../types";
+import { ChatState, ContactData, SocketMessage } from "../../types";
 import { io, Socket } from "socket.io-client"
 import axios from "../../api/axios.config"
 
@@ -40,7 +40,7 @@ export const ChatProvider = ({children}:Props) => {
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const encodedUserID = user.publicId.replace("#","%23")
     
-    const getContacts = async (options:getContactsProps = {refresh:false}) => {
+    const getContacts = async () => {
         
         const response = await axios.get(`/conversation?userID=${encodedUserID}`)
         const contacts = response.data
@@ -58,20 +58,13 @@ export const ChatProvider = ({children}:Props) => {
                     }
                 })
             })
-            if(options.refresh){
-                setState(prev => ({
-                    ...prev,
-                    isLoadingContacts:false,
-                    contactsData:sortByDate(contacts),
-                }))
-            }else{
-                setState(prev => ({
-                    ...prev,
-                    isLoadingContacts:false,
-                    contactsData:sortByDate(contacts),
-                    //currentConversation:sortByDate(contacts)[0]
-                }))
-            }
+           
+            setState(prev => ({
+                ...prev,
+                isLoadingContacts:false,
+                contactsData:sortByDate(contacts),
+            }))
+
         })
 
         socket.current?.on("send-disconnected", (user) => {
@@ -133,7 +126,7 @@ export const ChatProvider = ({children}:Props) => {
 
                         return {
                             ...contact,
-                            unreadMessages:message.conversationId !== prev.currentConversation?.id ? contact.unreadMessages + 1 : 0,
+                            unreadMessages:message.conversationId !== prev.currentConversation?.id || prev.menuContent === "contacts" ? contact.unreadMessages + 1 : 0,
                             lastMessage:{
                                 sender:message.sender,
                                 text:message.text,

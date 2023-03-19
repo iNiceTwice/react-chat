@@ -42,7 +42,3 @@ export interface MessageFormat {
 interface SocketMessage extends MessageFormat {
     receiver:string,
 }
-
-interface getContactsProps {
-    refresh?:Boolean
-}
