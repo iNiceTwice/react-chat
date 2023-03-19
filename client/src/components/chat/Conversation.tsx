@@ -30,7 +30,7 @@ const Conversation = () => {
     }
     
     const handleScroll = () => {
-        const olderMessage = messages[0].createdAt
+        const olderMessage = messages[0]?.createdAt
         const containerPos = containerRef.current?.scrollTop
     
         if (containerPos === 0 && olderMessage) {

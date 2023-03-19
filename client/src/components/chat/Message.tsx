@@ -54,7 +54,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
         <>  
             {
                 onlyText ?
-                <div className="w-full flex flex-col items-start pl-4">
+                <div className="w-full flex flex-col items-start md:pl-4">
                     <div className="ml-20">
                         <div className="mt-2 flex gap-1">
                             <div className="bg-white dark:bg-secondary_dark py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 dark:text-slate-200 shadow-sm max-w-[15rem] lg:max-w-2xl break-words">
@@ -64,7 +64,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                     </div>
                 </div> 
                 :       
-                <div className="w-full flex flex-col items-start pt-4 pl-4">
+                <div className="w-full flex flex-col items-start pt-4 md:pl-4">
                     <div className="rounded-full p-2 bg-primary -mb-16">
                         <img src={ image } alt={ from } className="w-10 lg:w-12" />
                     </div>
@@ -73,7 +73,7 @@ const ContactMessage = ({ image, from, text, sendedAt, onlyText }:Omit<Props, "o
                             <h2 className="font-semibold text-slate-800/90 dark:text-slate-200 text-lg">{ from }</h2>
                             <p className="text-xs">{ sendedAt }</p>
                         </div>
-                        <div className="mt-2 flex gap-1">
+                        <div className="mt-2 flex gap-1 w-full">
                             <div className="bg-white dark:bg-secondary_dark py-2 px-4 rounded-lg rounded-tl-none w-fit h-fit text-slate-800/80 dark:text-slate-200 shadow-sm max-w-[12rem] lg:max-w-2xl break-words">
                                 { text }
                             </div>

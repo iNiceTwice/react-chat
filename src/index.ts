@@ -71,8 +71,8 @@ io.on("connection", socket => {
 
   socket.on("add-user", (user) => {
     addUser(user.userID, socket.id)
-    if(user.contacts){
-      const connected = getConnectedContacts(user.contacts)   
+    if(user.contacts.length > 0){
+      const connected = getConnectedContacts(user.contacts) 
       io.to(socket.id).emit("send-connected", connected)  
       connected.forEach((contact:SocketUser) => {
         io.to(contact.socketID).emit("send-connected", [{socketID:socket.id, userID:user.userID}] )     

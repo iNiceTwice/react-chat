@@ -4,7 +4,6 @@ import ContactList from './ContactList'
 import UserProfile from './UserProfile'
 import AddContact from './AddContact'
 import { useContext } from "react"
-import Switch from "../Switch";
 import Folders from './Folders';
 import Settings from './Settings';
 

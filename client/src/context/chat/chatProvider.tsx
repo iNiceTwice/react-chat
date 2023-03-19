@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react"
 import { ChatContext } from "./chatContext"
-import { ChatState, ContactData, SocketMessage } from "../../types";
+import { ChatState, ContactData, getContactsProps, SocketMessage } from "../../types";
 import { io, Socket } from "socket.io-client"
 import axios from "../../api/axios.config"
 
@@ -40,40 +40,49 @@ export const ChatProvider = ({children}:Props) => {
     const user = JSON.parse(localStorage.getItem("chatUser") as string) 
     const encodedUserID = user.publicId.replace("#","%23")
     
+    const getContacts = async (options:getContactsProps = {refresh:false}) => {
+        
+        const response = await axios.get(`/conversation?userID=${encodedUserID}`)
+        const contacts = response.data
 
-    const getContacts = ():void => {
-        axios.get(`/conversation?userID=${encodedUserID}`)
-            .then(res => {
-                socket.current?.emit("add-user", { 
-                    userID:user.publicId,
-                    contacts:res.data
-                })              
-                socket.current?.on("send-connected", onlineContacts => {
-                    let connected = [...res.data]
-                    connected.map((contact, i) => {
-                        onlineContacts.map((onlineContact:{userID:string, socketID:string}) => {
-                            if(onlineContact.userID === contact.contactID){
-                                connected[i].isOnline = true
-                            }
-                        })
-                    })
-                    setState(prev => ({
-                        ...prev,
-                        isLoadingContacts:false,
-                        menuContent:connected.length === 0 ? "addContact" : "contacts", 
-                        contactsData:sortByDate(connected),
-                        currentConversation:sortByDate(connected)[0]
-                    }))
+        socket.current?.emit("add-user", { 
+            userID:user.publicId,
+            contacts:contacts
+        })
+
+        socket.current?.on("send-connected", onlineContacts => {
+            contacts.map((contact:ContactData, i:number) => {
+                onlineContacts.map((onlineContact:{userID:string, socketID:string}) => {
+                    if(onlineContact.userID === contact.contactID){
+                        contacts[i].isOnline = true
+                    }
                 })
-                socket.current?.on("send-disconnected", (user) => {
-                    const contactIndex = res.data.findIndex((contact:ContactData) => contact.contactID === user.userID)
-                    let newContactsData = [...res.data]
-                    newContactsData[contactIndex].isOnline = false
-                    setState(prev => ({...prev, contactsData:sortByDate(newContactsData)}))
+            })
+            if(options.refresh){
+                setState(prev => ({
+                    ...prev,
+                    isLoadingContacts:false,
+                    contactsData:sortByDate(contacts),
+                }))
+            }else{
+                setState(prev => ({
+                    ...prev,
+                    isLoadingContacts:false,
+                    contactsData:sortByDate(contacts),
+                    //currentConversation:sortByDate(contacts)[0]
+                }))
+            }
+        })
 
-                })                                                
-            })        
-            .catch(err => console.log(err))       
+        socket.current?.on("send-disconnected", (user) => {
+            const contactIndex = contacts.findIndex((contact:ContactData) => contact?.contactID === user?.userID)
+            let newContactsData = [...contacts]
+            if(contactIndex >= 0){
+                newContactsData[contactIndex].isOnline = false
+                setState(prev => ({...prev, contactsData:sortByDate(newContactsData)}))
+            }
+        })
+               
     }
 
     const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
@@ -102,20 +111,26 @@ export const ChatProvider = ({children}:Props) => {
         })
     }
     
-
     const getMessage = () => {
+    
         socket.current?.on("get-message", ( message:Omit<SocketMessage, "createdAt" | "_id">):void => {
-
-            if(message.conversationId === state.currentConversation?.id){
-                axios.put("/messages",{
-                    conversationId:message.conversationId,
-                    sender:message.sender,
-                })
-            }
-
             setState(prev => {
+                const exists = prev.contactsData?.find(contact => contact.id === message.conversationId)
+        
+                if(!exists){
+                    getContacts()
+
+                    if(message.conversationId === prev.currentConversation?.id){
+                        axios.put("/messages",{
+                            conversationId:message.conversationId,
+                            sender:message.sender,
+                        })
+                    }
+                    
+                }
                 const updatedContactsData = prev.contactsData.map((contact, i) => {
                     if(contact.id === message.conversationId) {
+
                         return {
                             ...contact,
                             unreadMessages:message.conversationId !== prev.currentConversation?.id ? contact.unreadMessages + 1 : 0,
@@ -128,7 +143,6 @@ export const ChatProvider = ({children}:Props) => {
                     }
                     return contact
                 })
-
                 return{
                     ...prev, 
                     currentMessage:message,
@@ -138,26 +152,23 @@ export const ChatProvider = ({children}:Props) => {
         })
     }
     
-    const sortByDate = (array:ContactData[]) => {
-        return array.sort((a, b) => {
+    const sortByDate = (contacts:ContactData[]) => {
+        return contacts.sort((a, b) => {
             const dateA = a.lastMessage ? Date.parse(a.lastMessage.sendedAt) : undefined;
             const dateB = b.lastMessage ? Date.parse(b.lastMessage.sendedAt) : undefined;
             return (dateB ?? 0) - (dateA ?? 0);
         })
     }
 
-    const userNotHaveContacts = () => {
-        if(!state.contactsData?.length){
-            setState(prev => ({...prev, menuContent:"addContact"}))
-        }
-    }
-
     useEffect(() => {
         socket.current = io("http://localhost:3001")
         getContacts()
+    }, []);
+    
+    useMemo(() => {
         getMessage()
-    }, []);  
-
+    }, [state.isLoadingContacts]);
+    
     return (
         <ChatContext.Provider
             value={{

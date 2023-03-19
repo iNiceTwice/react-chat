@@ -11,6 +11,7 @@ interface ContactProps {
 
 const Contact = ({username, isOnline, img, lastMessage, lastMessageTime, unreadMessages }:ContactProps) => {
     
+    
     return ( 
         <>
             <div className="w-full flex items-center py-6 gap-4 hover:bg-slate-100/80 dark:hover:bg-zinc-900/50 px-4">

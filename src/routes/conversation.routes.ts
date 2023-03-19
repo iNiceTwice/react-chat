@@ -12,6 +12,11 @@ router.get("/conversations", async (req, res) => { //DELETE
     const conversations = await CONVERSATIONS.find()
     res.send(conversations)
 })
+router.get("/delete", async (req, res) => { //DELETE
+    console.log("delete")
+    await CONVERSATIONS.findOneAndDelete({members:[req.query.sender, req.query.receiver]})
+    res.status(200).send("deleted")
+})
 
 
 

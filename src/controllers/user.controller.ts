@@ -95,9 +95,9 @@ export const loginUser = async (req: Request, res:Response):Promise<Object> => {
 
 export const changeTheme = async (req: Request, res:Response) => {
     const { id, theme } = req.body
-    console.log(id, theme)
+
     const user = await USERS.findOneAndUpdate({ publicId:id }, { themePreference:theme })
-    console.log(user)
+
     if(!user){
         return res.status(404).json({message: "User not found"})
     }
