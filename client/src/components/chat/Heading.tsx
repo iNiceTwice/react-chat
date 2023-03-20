@@ -22,10 +22,16 @@ const Heading = () => {
         notify()
     }
     
+    if(state.currentConversation.id === ""){
+        return (
+            <>
+                <div className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 dark:border-tertiary_dark dark:bg-secondary_dark border-slate-100 bg-secondary active:bg-slate-100 transition-colors"></div>
+            </>
+        )
+    }
+
     return ( 
         <div className="flex">
-            {
-            state.currentConversation ?
             <div className="flex justify-between items-center w-full border-b-2 border-slate-100 bg-secondary dark:border-tertiary_dark dark:bg-secondary_dark px-4 md:px-10">
                 <button onClick={handleClick} className="flex items-center w-full h-32 py-2 active:bg-slate-100 transition-colors">
                     {
@@ -61,9 +67,6 @@ const Heading = () => {
                     </button>
                 </div>        
             </div>
-            :
-            <button className="flex items-center justify-between w-full h-32 px-6 py-2 border-b-2 dark:border-tertiary_dark dark:bg-secondary_dark border-slate-100 bg-secondary active:bg-slate-100 transition-colors"></button>
-            }
             <div className="h-full flex items-center md:hidden pr-4 border-b-2 border-slate-100 bg-secondary dark:border-tertiary_dark dark:bg-secondary_dark">
                 <Menu/>
             </div>

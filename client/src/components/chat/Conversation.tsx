@@ -4,6 +4,7 @@ import { ChatContext } from "../../context/chat/chatContext";
 import { MessageFormat, SocketMessage } from "../../types";
 import Message from "./Message";
 import { CircularProgress } from "@mui/material";
+import DefaultScreen from "../DefaultScreen";
 
 const Conversation = () => {
 
@@ -68,6 +69,14 @@ const Conversation = () => {
         lastMessageRef.current?.scrollIntoView({behavior:"smooth"})
     }, [currentNewMessages])
 
+    if(state.currentConversation.id === ""){
+        return(
+            <div className="flex h-full w-full items-center justify-center bg-transparent opacity-40">
+                <DefaultScreen/>
+            </div>
+        ) 
+    }
+    
     return ( 
         <div onScroll={handleScroll} ref={containerRef} className="flex flex-col w-full p-2 h-full overflow-y-auto styled-scrollbar">
             { isLoading && 

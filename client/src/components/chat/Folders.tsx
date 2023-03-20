@@ -3,7 +3,7 @@ import Menu from "./Menu";
 const Folders = () => {
     return ( 
         <div className="w-full p-5">
-            <div className="flex justify-between w-full p-5">
+            <div className="flex justify-between w-full">
                 <h2 className="text-2xl py-4 text-primary font-bold">Folders</h2>
                 <Menu/>
             </div>

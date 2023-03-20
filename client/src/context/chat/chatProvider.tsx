@@ -62,6 +62,7 @@ export const ChatProvider = ({children}:Props) => {
             setState(prev => ({
                 ...prev,
                 isLoadingContacts:false,
+                menuContent:contacts.length === 0 ? "addContact" : "contacts",
                 contactsData:sortByDate(contacts),
             }))
 
