@@ -8,6 +8,7 @@ import Menu from "./Menu";
 import { CiSearch } from "react-icons/ci";
 import AnimatedListItem from "../animations/AnimatedListItem";
 import AnimatedListContainer from "../animations/AnimatedListContainer";
+import AnimatedSlide from "../animations/AnimatedSlide";
 
 const ContactList = () => {
 
@@ -46,7 +47,9 @@ const ContactList = () => {
     return ( 
         <div>
             <div className="flex justify-between w-full p-5">
-                <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
+                <AnimatedSlide>
+                    <h2 className="text-2xl py-4 text-primary font-bold">Messages</h2>
+                </AnimatedSlide>
                 <Menu/>
             </div>
             <div className="px-4 mb-6 w-full">

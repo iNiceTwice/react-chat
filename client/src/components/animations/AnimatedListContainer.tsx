@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 
 interface Props {
-    children?: JSX.Element | JSX.Element[],
+    children: JSX.Element | JSX.Element[],
     className?:string
 }
 
-const AnimatedListContainer = ({ children }:Props) => {
+const AnimatedListContainer = ({ children, className }:Props) => {
     
     const container = {
       hidden: { opacity: 1, scale: 0 },
@@ -20,7 +20,7 @@ const AnimatedListContainer = ({ children }:Props) => {
     }
 
     return ( 
-        <motion.ul variants={container} initial="hidden" animate="visible">
+        <motion.ul className={className} variants={container} initial="hidden" animate="visible">
             {
                 children
             }

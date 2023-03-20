@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 
 interface Props {
-    children?: JSX.Element | JSX.Element[]
+    children: JSX.Element | JSX.Element[],
+    className?:string
 }
 
-const AnimatedListItem = ({ children }:Props) => {
+const AnimatedListItem = ({ children, className }:Props) => {
 
     const item = {
         hidden: { y: 20, opacity: 0 },
@@ -15,7 +16,7 @@ const AnimatedListItem = ({ children }:Props) => {
     }
 
     return ( 
-        <motion.li variants={item}>
+        <motion.li className={className} variants={item}>
             {
                 children
             }

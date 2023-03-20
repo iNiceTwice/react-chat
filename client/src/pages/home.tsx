@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios.config"
 import Logo from "../components/Logo";
+import AnimatedShowUp from "../components/animations/AnimatedShowUp";
 
 const Home = () => {
 
@@ -24,7 +25,9 @@ const Home = () => {
         <HomeProvider>
             <div className="bg-pattern w-full h-full flex justify-center items-center">
                 <div className="flex flex-col items-center lg:flex-row p-5 backdrop-blur w-full lg:w-fit rounded-xl min-h-[20rem] gap-x-16 gap-y-6">
-                    <Logo/>
+                    <AnimatedShowUp>
+                        <Logo/>
+                    </AnimatedShowUp>
                     <AuthOptions/>
                 </div>
             </div>

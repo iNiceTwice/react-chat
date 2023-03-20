@@ -7,6 +7,7 @@ import { useFormik } from "formik"
 import axios from "../../api/axios.config";
 import { User } from "../../types";
 import { CiUnread, CiRead } from "react-icons/ci";
+import { motion } from "framer-motion";
 
 interface Error {
     isError:{
@@ -79,9 +80,18 @@ const Register = () => {
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-12 text-slate-800 w-80">
                 <div className="flex justify-center">
-                    <div className="p-4 w-40 h-40 flex items-center justify-center bg-white shadow-md rounded-full">
+                    <motion.div 
+                        initial={{scale:0.3}}
+                        animate={{scale:1}}
+                        transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20
+                        }}
+                        className="p-4 w-40 h-40 flex items-center justify-center bg-white shadow-md rounded-full"
+                    >
                         <img src={`https://api.dicebear.com/5.x/big-smile/svg?seed=${values.username}`} alt="Your avatar."/>
-                    </div>
+                    </motion.div>
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>Username</label>

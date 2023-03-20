@@ -4,6 +4,7 @@ import ErrorMessage from "../ErrorMessage"
 import Menu from "./Menu"
 import { toast} from 'react-toastify'
 import { ChatContext } from "../../context/chat/chatContext"
+import AnimatedSlide from "../animations/AnimatedSlide"
 
 interface Error {
     isError: boolean,
@@ -38,7 +39,9 @@ const AddContact = () => {
     return (
         <>
             <div className="flex justify-between w-full p-5">
-                <h2 className="text-2xl py-4 text-primary font-bold">Add a contact</h2>
+                <AnimatedSlide>
+                    <h2 className="text-2xl py-4 text-primary font-bold">Add a contact</h2>
+                </AnimatedSlide>
                 <Menu/>
             </div>
             <div className="flex flex-col p-5">
