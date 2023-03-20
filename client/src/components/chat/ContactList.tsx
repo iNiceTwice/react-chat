@@ -6,6 +6,8 @@ import ContactSkeleton from "./ContactSkeleton";
 import axios from "../../api/axios.config"
 import Menu from "./Menu";
 import { CiSearch } from "react-icons/ci";
+import AnimatedListItem from "../animations/AnimatedListItem";
+import AnimatedListContainer from "../animations/AnimatedListContainer";
 
 const ContactList = () => {
 
@@ -55,45 +57,50 @@ const ContactList = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col w-full h-full styled-scrollbar overflow-y-auto pb-16">
-                {
-                    state.isLoadingContacts && 
-                    <div className="flex flex-col w-full gap-10 px-4 mt-6">
-                        <ContactSkeleton/>
-                        <ContactSkeleton/>
-                        <ContactSkeleton/>
-                        <ContactSkeleton/>
-                    </div>
-                }
-                {
-                    filter === "" ? 
-                    state.contactsData?.map((contact)=>(
-                        <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
-                            <Contact 
-                                username={contact.contactName}
-                                isOnline={contact.isOnline} 
-                                img={contact.contactImage}
-                                unreadMessages={contact.unreadMessages} 
-                                lastMessage={contact.lastMessage?.sender === user.name ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
-                                lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
-                            />                     
-                        </button>
-                    ))
-                    :
-                    filteredContacts?.map((contact)=>(
-                        <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
-                            <Contact 
-                                username={contact.contactName} 
-                                isOnline={contact.isOnline} 
-                                img={contact.contactImage} 
-                                unreadMessages={contact.unreadMessages} 
-                                lastMessage={contact.contactID === user.publicId ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
-                                lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
-                            />                     
-                        </button>
-                    ))
-                }
-            </div>
+            {
+                state.isLoadingContacts ? 
+                <div className="flex flex-col w-full gap-10 px-4 mt-6">
+                    <ContactSkeleton/>
+                    <ContactSkeleton/>
+                    <ContactSkeleton/>
+                    <ContactSkeleton/>
+                </div>
+                :
+                <AnimatedListContainer className="flex flex-col w-full h-full styled-scrollbar overflow-y-auto pb-16">
+                    {
+                        filter === "" ? 
+                        state.contactsData?.map((contact)=>(
+                            <AnimatedListItem>
+                                <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
+                                    <Contact 
+                                        username={contact.contactName}
+                                        isOnline={contact.isOnline} 
+                                        img={contact.contactImage}
+                                        unreadMessages={contact.unreadMessages} 
+                                        lastMessage={contact.lastMessage?.sender === user.name ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
+                                        lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
+                                    />                     
+                                </button>
+                            </AnimatedListItem>
+                        ))
+                        :
+                        filteredContacts?.map((contact)=>(
+                            <AnimatedListItem>
+                                <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
+                                    <Contact 
+                                        username={contact.contactName} 
+                                        isOnline={contact.isOnline} 
+                                        img={contact.contactImage} 
+                                        unreadMessages={contact.unreadMessages} 
+                                        lastMessage={contact.contactID === user.publicId ? `You: ${contact.lastMessage?.text}` : contact.lastMessage?.text}
+                                        lastMessageTime={contact.lastMessage?.text && new Date(contact.lastMessage?.sendedAt).toTimeString().slice(0,5)}
+                                    />                     
+                                </button>
+                            </AnimatedListItem>
+                        ))
+                    }
+                </AnimatedListContainer>
+            }
         </div>
      );
 }
