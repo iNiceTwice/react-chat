@@ -82,7 +82,7 @@ io.on("connection", socket => {
 
   socket.on("send-message", ({sender, receiver, text, conversationId }) => {
     const user = getUser(receiver)
-    console.log(sender, receiver, text)
+
     if(user){
       io.to(user.socketID).emit("get-message", {
         conversationId,
@@ -96,7 +96,7 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     const userDisconnected = users.find(user => user.socketID === socket.id)
     io.emit("send-disconnected", userDisconnected)
-    console.log(userDisconnected)
+
     removeUser(socket.id)
     console.log(`Usuario ${socket.id} desconctado`) 
   })

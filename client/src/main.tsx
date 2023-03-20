@@ -5,7 +5,7 @@ import './styles/index.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
- 
-    <App />
-  
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
 )
