@@ -1,5 +1,5 @@
 import axios from "../../api/axios.config";
-import { useContext, useState, useRef } from "react"
+import { useContext, useState, useRef, useMemo } from "react"
 import { ChatContext } from "../../context/chat/chatContext";
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 import { CiFaceSmile } from "react-icons/ci";
@@ -55,6 +55,10 @@ const ChatInput = () => {
     const showPicker = ():void => {
         setShowEmojiPicker(prev => !prev)
     }
+
+    useMemo(()=> {
+        inputRef.current?.focus()
+    },[state.currentConversation])
 
     return ( 
         <form onSubmit={ handleSubmit } className="flex flex-col items-center gap-2 w-full py-4 bg-secondary border-t-2 border-slate-100 dark:bg-secondary_dark dark:border-tertiary_dark">
