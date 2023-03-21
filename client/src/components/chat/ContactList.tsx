@@ -73,8 +73,8 @@ const ContactList = () => {
                     {
                         filter === "" ? 
                         state.contactsData?.map((contact)=>(
-                            <AnimatedListItem>
-                                <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
+                            <AnimatedListItem key={contact.contactID}>
+                                <button className="w-full" onClick={() => setCurrentConversation(contact)}>
                                     <Contact 
                                         username={contact.contactName}
                                         isOnline={contact.isOnline} 
@@ -88,8 +88,8 @@ const ContactList = () => {
                         ))
                         :
                         filteredContacts?.map((contact)=>(
-                            <AnimatedListItem>
-                                <button className="w-full" onClick={() => setCurrentConversation(contact)} key={contact.contactID}>
+                            <AnimatedListItem key={contact.contactID}>
+                                <button className="w-full" onClick={() => setCurrentConversation(contact)}>
                                     <Contact 
                                         username={contact.contactName} 
                                         isOnline={contact.isOnline} 
