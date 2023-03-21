@@ -184,8 +184,7 @@ export const ChatProvider = ({children}:Props) => {
     }
 
     useEffect(() => {
-        //socket.current = io("https://chatio-server.up.railway.app")
-        socket.current = io("http://localhost:3001")
+        socket.current = io("https://chatio-server.up.railway.app")
         getContacts()
     }, []);
     

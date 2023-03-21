@@ -22,8 +22,7 @@ mongoose.connect(process.env.MONGO_URI ?? "")
 .catch(err => console.log(err));
 
 //middlewares
-//app.use(cors({origin:"https://itschat-io.vercel.app", credentials:true}));
-app.use(cors({origin:"http://localhost:3000", credentials:true}));
+app.use(cors({origin:"https://itschat-io.vercel.app", credentials:true}));
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -42,8 +41,7 @@ server.listen(app.get("port"), () => {
 
 const io = new Server(server, {
   cors:{
-    //origin:"https://itschat-io.vercel.app",
-    origin:"http://localhost:3000",
+    origin:"https://itschat-io.vercel.app",
     methods:["GET","POST"]
   }
 })
