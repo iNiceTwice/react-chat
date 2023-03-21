@@ -8,6 +8,11 @@ interface Props {
      children: JSX.Element | JSX.Element[];
 }
 
+interface OnlineContacts {
+    userID:string, 
+    socketID:string
+}
+
 const initialState:ChatState = {
     menuContent:"contacts",
     showContactProfile:false,
@@ -51,32 +56,56 @@ export const ChatProvider = ({children}:Props) => {
         })
 
         socket.current?.on("send-connected", onlineContacts => {
-            contacts.map((contact:ContactData, i:number) => {
-                onlineContacts.map((onlineContact:{userID:string, socketID:string}) => {
-                    if(onlineContact.userID === contact.contactID){
-                        contacts[i].isOnline = true
+
+            if(state.isLoadingContacts){
+                setState(prev => {
+                    return {
+                        ...prev,
+                        contactsData:sortByDate(updateContactStatus(prev.contactsData, onlineContacts)),
                     }
                 })
-            })
-           
-            setState(prev => ({
-                ...prev,
-                isLoadingContacts:false,
-                menuContent:contacts.length === 0 ? "addContact" : "contacts",
-                contactsData:sortByDate(contacts),
-            }))
+            }
 
         })
 
+        setState(prev => ({
+            ...prev,
+            isLoadingContacts:false,
+            menuContent:contacts.length === 0 ? "addContact" : "contacts",
+            contactsData:sortByDate(contacts),
+        }))
+        
+    }
+    
+    const updateContactStatus = (contacts:ContactData[], onlineContacts:OnlineContacts[]):ContactData[] => {
+        let updatedStatus = [...contacts]
+        contacts.map((contact:ContactData, i:number) => {
+            onlineContacts.map((onlineContact:{userID:string, socketID:string}) => {
+                if(onlineContact.userID === contact.contactID){
+                    updatedStatus[i].isOnline = true
+                }
+            })
+        })
+
+        return updatedStatus
+    }
+
+    const sendDisconnection = () => {
+        
         socket.current?.on("send-disconnected", (user) => {
-            const contactIndex = contacts.findIndex((contact:ContactData) => contact?.contactID === user?.userID)
-            let newContactsData = [...contacts]
+            const contactIndex = state.contactsData.findIndex((contact:ContactData) => contact?.contactID === user?.userID)
+            
             if(contactIndex >= 0){
-                newContactsData[contactIndex].isOnline = false
-                setState(prev => ({...prev, contactsData:sortByDate(newContactsData)}))
+                setState(prev => {
+                    let newContactsData = [...prev.contactsData]
+                    newContactsData[contactIndex].isOnline = false
+                    return {
+                        ...prev, 
+                        contactsData:sortByDate(newContactsData)
+                    }
+                })
             }
         })
-               
     }
 
     const sendMessage = ( message:Omit<SocketMessage, "createdAt" | "_id"> ):void => {
@@ -155,12 +184,14 @@ export const ChatProvider = ({children}:Props) => {
     }
 
     useEffect(() => {
-        socket.current = io("https://chatio-server.up.railway.app")
+        //socket.current = io("https://chatio-server.up.railway.app")
+        socket.current = io("http://localhost:3001")
         getContacts()
     }, []);
     
     useMemo(() => {
         getMessage()
+        sendDisconnection()
     }, [state.isLoadingContacts]);
     
     return (
